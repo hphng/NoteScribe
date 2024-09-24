@@ -8,9 +8,10 @@ const Main = () => {
     const [mediaRecorder, setMediaRecorder] = useState(null);
     // const [audioChunks, setAudioChunks] = useState([]);
     const [duration, setDuration] = useState(0);
-
     const [microphoneGranted, setMicrophoneGranted] = useState(false);
 
+    //______________________ HANDLE LIVE RECORD ______________________
+    //request microphone permission
     const requestMicrophonePermission = async () => {
         try {
             //check if MediaRecorder is supported
@@ -28,6 +29,7 @@ const Main = () => {
             console.error('Error in getting microphone permission', error);
         }
     }
+    //start recording
     const startRecording = async () => {
         try {
             const stream = await requestMicrophonePermission();
@@ -59,26 +61,37 @@ const Main = () => {
             console.error("error in initializing microphone", error);
         }
     }
-
+    //stop recording
     const stopRecording = () => {
         console.log('Stoppppp');
         if (mediaRecorder) {
             mediaRecorder.stop();
             setRecordingStatus(false);
-            setDuration(0);
         }
     }
-
-
     //set interval to update duration
     useEffect(() => {
-        setDuration(0);
-        const interval = setInterval(() => {
-            setDuration(duration => duration + 1);
-        }, 1000);
-
-        return () => clearInterval(interval);
+        if(recordingStatus){
+            setDuration(0);
+            const interval = setInterval(() => {
+                setDuration(duration => duration + 1);
+            }, 1000);
+            return () => clearInterval(interval);
+        }
+        return;
     }, [recordingStatus]);
+    //______________________ HANDLE UPLOAD RECORD ______________________
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+        if(file){
+            console.log('File selected:', file.type);
+            const fileAudioURL = URL.createObjectURL(file);
+            setAudioURL(fileAudioURL);
+        }else{
+            alert('No file selected');
+            console.error('No file selected');
+        }
+    }
     return (
         <main className=''>
             <div className='min-h-screen flex flex-col items-center justify-center'>
@@ -93,14 +106,18 @@ const Main = () => {
                     <p className='text-black'>
                         {recordingStatus ? 'Recording...' : 'Start Recording'}
                     </p>
-                    <div className='flex flex-row gap-2 border items-center justify-center'>
-                        <p> {recordingStatus ? duration : <></>}</p>
-                        <FontAwesomeIcon icon={faMicrophone} />
+                    <div className='flex flex-row gap-2 items-center justify-center'>
+                        {duration > 0 && (
+                            <p> {duration}s </p>
+                        )}
+                        <FontAwesomeIcon icon={faMicrophone} className={'duration-200' + (
+                            recordingStatus ? ' text-red-500 animate-spin' : ' text-black'
+                        )} />
                     </div>
                 </button>
                 <div className='text-xl'>
                     Or <label className='text-orange-500 cursor-pointer hover:shadow-orange-500 hover:text-shadow-[1px_0_10px_var(--tw-shadow-color)] duration-300'>
-                        upload <input className='hidden' type="file" accept='mp3' />
+                        upload <input className='hidden' type="file" accept='audio/mp3' onChange={handleFileUpload} />
                     </label> a mp3 file
                 </div>
             </div>
