@@ -72,9 +72,7 @@ const Main = () => {
 
     //set interval to update duration
     useEffect(() => {
-        if(!recordingStatus){
-            setDuration(0);
-        }
+        setDuration(0);
         const interval = setInterval(() => {
             setDuration(duration => duration + 1);
         }, 1000);
