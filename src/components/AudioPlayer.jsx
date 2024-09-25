@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
-import { faPause } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faPause, faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
 
-
+  //play and pause audio
   const togglePlayPause = () => {
     const audio = audioRef.current;
     if (isPlaying) {
@@ -21,6 +21,7 @@ const AudioPlayer = () => {
     setIsPlaying(!isPlaying);
   };
 
+  //handle time update on progess bar
   const handleTimeUpdate = () => {
     const audio = audioRef.current;
     setCurrentTime(audio.currentTime);
@@ -30,16 +31,21 @@ const AudioPlayer = () => {
     progressBarRef.current.style.setProperty("--seek-before-width", `${progressPercentage}%`);
   };
 
+  //handle progress change on progress bar
   const handleProgressChange = (e) => {
-    // audioRef.current.currentTime = progressBarRef.current.value;
-    // progressBarRef.current.style.setProperty("--seek-before-width", `${progressBarRef.current.value/ duration *100}%`);
-    // setCurrentTime(audioRef.current.currentTime);
     const audio = audioRef.current;
     const value = e.target.value;
     const seekTime = (value / 100) * audio.duration;
     audio.currentTime = seekTime;
     setCurrentTime(seekTime);
   };
+
+  //handle muted and unmuted
+  const toggleMute = () => {
+    const audio = audioRef.current;
+    audio.muted = !isMuted;
+    setIsMuted(!isMuted);
+  }
 
   useEffect(() => {
     const audio = audioRef.current;
@@ -61,20 +67,19 @@ const AudioPlayer = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-6xl font-bold pb-4">Your Audio</h1>
-      <audio
-        ref={audioRef}
-        onTimeUpdate={handleTimeUpdate}
-        src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-      ></audio>
+      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate}>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
       <div className="w-auto p-2 bg-transparent border-2 border-black shadow-md shadow-orange-500 rounded-xl flex flex-row">
         <button
           onClick={togglePlayPause}
-          className="text-black w-8 aspect-square rounded-full fa-sm bg-orange-500/50 hover:bg-orange-500/50 flex items-center justify-center"
+          className="text-black w-8 aspect-square rounded-full fa-sm bg-orange-500/50 hover:bg-orange-500/80 flex items-center justify-center"
         >
           {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
         </button>
 
-        <div className="flex items-center space-x-2 relative">
+        <div className="flex items-center px-3 space-x-2 relative">
           <span>{formatTime(currentTime)}</span>
           <input
             type="range"
@@ -85,6 +90,12 @@ const AudioPlayer = () => {
           />
           <span>{formatTime(duration)}</span>
         </div>
+        <button
+          onClick={toggleMute}
+          className="text-black w-8 aspect-square rounded-full fa-sm bg-orange-500/50 hover:bg-orange-500/80 flex items-center justify-center"
+        >
+          {isMuted ? <FontAwesomeIcon icon={faVolumeXmark} /> : <FontAwesomeIcon icon={faVolumeHigh} />}
+        </button>
       </div>
     </div>
   );
