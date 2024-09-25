@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause, faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
+import {useLocation} from 'react-router-dom'
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -9,6 +10,10 @@ const AudioPlayer = () => {
   const [isMuted, setIsMuted] = useState(false);
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
+
+  //get the current location
+  const location = useLocation();
+  const {audioURL, audioDuration} = location.state || {};
 
   //play and pause audio
   const togglePlayPause = () => {
@@ -49,7 +54,11 @@ const AudioPlayer = () => {
 
   useEffect(() => {
     const audio = audioRef.current;
-    const updateDuration = () => setDuration(audio.duration);
+    if(!audioDuration){
+      audioDuration = audio.duration;
+    }
+
+    const updateDuration = () => setDuration(audioDuration);
     audio.addEventListener("loadedmetadata", updateDuration);
 
     return () => {
@@ -66,9 +75,9 @@ const AudioPlayer = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-6xl font-bold pb-4">Your Audio</h1>
-      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate}>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mp3" />
+      <h1 className="text-6xl font-bold pb-4">Your <span className='bold text-orange-500'>Scribe</span></h1>
+      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} preload="auto">
+        <source src={audioURL} type="audio/mp3" />
         Your browser does not support the audio element.
       </audio>
       <div className="w-auto p-2 bg-transparent border-2 border-black shadow-md shadow-orange-500 rounded-xl flex flex-row">
@@ -77,7 +86,7 @@ const AudioPlayer = () => {
           className="text-black w-8 aspect-square rounded-full fa-sm bg-orange-500/50 hover:bg-orange-500/80 flex items-center justify-center"
         >
           {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
-        </button>
+        </button> 
 
         <div className="flex items-center px-3 space-x-2 relative">
           <span>{formatTime(currentTime)}</span>

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMicrophone } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
+import getBlobDuration from "get-blob-duration";
 
 const Main = () => {
     const [recordingStatus, setRecordingStatus] = useState(false);
@@ -9,6 +11,7 @@ const Main = () => {
     // const [audioChunks, setAudioChunks] = useState([]);
     const [duration, setDuration] = useState(0);
     const [microphoneGranted, setMicrophoneGranted] = useState(false);
+    const navigate = useNavigate();
 
     //______________________ HANDLE LIVE RECORD ______________________
     //request microphone permission
@@ -71,7 +74,7 @@ const Main = () => {
     }
     //set interval to update duration
     useEffect(() => {
-        if(recordingStatus){
+        if (recordingStatus) {
             setDuration(0);
             const interval = setInterval(() => {
                 setDuration(duration => duration + 1);
@@ -83,14 +86,20 @@ const Main = () => {
     //______________________ HANDLE UPLOAD RECORD ______________________
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
-        if(file){
+        if (file) {
             console.log('File selected:', file.type);
             const fileAudioURL = URL.createObjectURL(file);
             setAudioURL(fileAudioURL);
-        }else{
+        } else {
             alert('No file selected');
             console.error('No file selected');
         }
+    }
+
+    //navigate to the editor page
+    const goToAudioPlayer = async () => {
+        const audioDuration = await getBlobDuration(audioURL);
+        navigate('/test', { state: { audioURL, audioDuration } });
     }
     return (
         <main className=''>
@@ -122,9 +131,12 @@ const Main = () => {
                 </div>
             </div>
             {audioURL && (
-                <div className='mt-4'>
-                    <audio controls src={audioURL} className='border border-red-500'/>
-                </div>
+                <button
+                    onClick={goToAudioPlayer}
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
+                >
+                    Go to Audio Player
+                </button>
             )}
             <div className='min-h-screen'>
 
