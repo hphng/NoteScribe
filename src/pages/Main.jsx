@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMicrophone } from '@fortawesome/free-solid-svg-icons'
+import { faMicrophone, faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import getBlobDuration from "get-blob-duration";
 
@@ -8,9 +8,10 @@ const Main = () => {
     const [recordingStatus, setRecordingStatus] = useState(false);
     const [audioURL, setAudioURL] = useState('');
     const [mediaRecorder, setMediaRecorder] = useState(null);
-    // const [audioChunks, setAudioChunks] = useState([]);
+    const [fileName, setFileName] = useState("");
     const [duration, setDuration] = useState(0);
     const [microphoneGranted, setMicrophoneGranted] = useState(false);
+    const fileInputRef = useRef(null);
     const navigate = useNavigate();
 
     //______________________ HANDLE LIVE RECORD ______________________
@@ -90,6 +91,7 @@ const Main = () => {
             console.log('File selected:', file.type);
             const fileAudioURL = URL.createObjectURL(file);
             setAudioURL(fileAudioURL);
+            setFileName(file.name);
         } else {
             alert('No file selected');
             console.error('No file selected');
@@ -100,6 +102,15 @@ const Main = () => {
     const goToAudioPlayer = async () => {
         const audioDuration = await getBlobDuration(audioURL);
         navigate('/test', { state: { audioURL, audioDuration } });
+    }
+
+    //reset audio
+    const resetAudio = () => {
+        setAudioURL('');
+        setFileName('');
+        setDuration(0);
+        setRecordingStatus(false);
+        fileInputRef.current.value = '';
     }
     return (
         <main className=''>
@@ -126,18 +137,26 @@ const Main = () => {
                 </button>
                 <div className='text-xl'>
                     Or <label className='text-orange-500 cursor-pointer hover:shadow-orange-500 hover:text-shadow-[1px_0_10px_var(--tw-shadow-color)] duration-300'>
-                        upload <input className='hidden' type="file" accept='audio/mp3' onChange={handleFileUpload} />
+                        upload <input className='hidden' type="file" accept='audio/mp3' onChange={handleFileUpload} ref={fileInputRef} />
                     </label> a mp3 file
+                    <p className='text-xs'>{fileName}</p>
+                </div>
+                <div className=' w-96 mt-10 flex flex-row justify-between'>
+                    <button
+                        onClick={resetAudio}
+                        className={` mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200`}
+                    >
+                        Reset
+                    </button>
+                    <button
+                        onClick={goToAudioPlayer}
+                        disabled={!audioURL}
+                        className={` mt-4 px-4 py-2 text-white rounded-lg ${audioURL ? "bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200" : "bg-gray-500/50"}`}
+                    >
+                        <FontAwesomeIcon icon={faArrowRight} />
+                    </button>
                 </div>
             </div>
-            {audioURL && (
-                <button
-                    onClick={goToAudioPlayer}
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                >
-                    Go to Audio Player
-                </button>
-            )}
             <div className='min-h-screen'>
 
             </div>

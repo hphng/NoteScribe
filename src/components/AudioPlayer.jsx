@@ -13,7 +13,7 @@ const AudioPlayer = () => {
 
   //get the current location
   const location = useLocation();
-  const {audioURL, audioDuration} = location.state || {};
+  let {audioURL, audioDuration} = location.state || {};
 
   //play and pause audio
   const togglePlayPause = () => {
