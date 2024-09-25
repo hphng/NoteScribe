@@ -111,7 +111,7 @@ const Main = () => {
                             <p> {duration}s </p>
                         )}
                         <FontAwesomeIcon icon={faMicrophone} className={'duration-200' + (
-                            recordingStatus ? ' text-red-500 animate-spin' : ' text-black'
+                            recordingStatus ? ' text-red-500 animate-pulse' : ' text-black'
                         )} />
                     </div>
                 </button>
@@ -123,7 +123,7 @@ const Main = () => {
             </div>
             {audioURL && (
                 <div className='mt-4'>
-                    <audio controls src={audioURL} />
+                    <audio controls src={audioURL} className='border border-red-500'/>
                 </div>
             )}
             <div className='min-h-screen'>

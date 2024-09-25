@@ -1,8 +1,10 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import NavBar from './components/NavBar'
+import NavBar from './components/Navbar'
 import Main from './pages/Main'
 import About from './pages/About'
+import AudioPlayer from './components/AudioPlayer'
+import Footer from './components/Footer'
 
 export default function App() {
   return (
@@ -13,8 +15,10 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/about" element={<About />} />
+            <Route path="/test" element={<AudioPlayer />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </Router>
   )
