@@ -157,9 +157,6 @@ const Main = () => {
                     </button>
                 </div>
             </div>
-            <div className='min-h-screen'>
-
-            </div>
         </main>
     )
 }

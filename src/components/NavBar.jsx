@@ -11,7 +11,7 @@ const NavBar = () => {
   }, []);
 
   return (
-    <nav className={`fixed w-full top-0 z-500 transition duration-300 ease-in-out pr-8 pl-4
+    <nav className={`fixed w-full top-0 z-50 transition duration-300 ease-in-out pr-8 pl-4
       ${scroll ? 'bg-slate-800 text-white shadow-md shadow-slate-500' : 'bg-transparent text-black shadow-md shadow-neutral-300'}  py-4`}>
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">
