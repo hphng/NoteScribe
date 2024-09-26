@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause, faVolumeHigh, faVolumeXmark } from "@fortawesome/free-solid-svg-icons";
-import {useLocation} from 'react-router-dom'
+import { faPlay, faPause, faVolumeHigh, faVolumeXmark, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -10,10 +10,11 @@ const AudioPlayer = () => {
   const [isMuted, setIsMuted] = useState(false);
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
+  const navigate = useNavigate();
 
   //get the current location
   const location = useLocation();
-  let {audioURL, audioDuration} = location.state || {};
+  let { audioURL, audioDuration } = location.state || {};
 
   //play and pause audio
   const togglePlayPause = () => {
@@ -54,7 +55,7 @@ const AudioPlayer = () => {
 
   useEffect(() => {
     const audio = audioRef.current;
-    if(!audioDuration){
+    if (!audioDuration) {
       audioDuration = audio.duration;
     }
 
@@ -73,6 +74,14 @@ const AudioPlayer = () => {
       }${seconds}`;
   };
 
+  const backToMain = () => {
+    navigate(-1);
+  };
+
+  const goToTranscribe = () => {
+    navigate('/transcribe', { state: { audioURL } });
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-6xl font-bold pb-4">Your <span className='bold text-orange-500'>Scribe</span></h1>
@@ -86,7 +95,7 @@ const AudioPlayer = () => {
           className="text-black w-8 aspect-square rounded-full fa-sm bg-orange-500/50 hover:bg-orange-500/80 flex items-center justify-center"
         >
           {isPlaying ? <FontAwesomeIcon icon={faPause} /> : <FontAwesomeIcon icon={faPlay} />}
-        </button> 
+        </button>
 
         <div className="flex items-center px-3 space-x-2 relative">
           <span>{formatTime(currentTime)}</span>
@@ -104,6 +113,29 @@ const AudioPlayer = () => {
           className="text-black w-8 aspect-square rounded-full fa-sm bg-orange-500/50 hover:bg-orange-500/80 flex items-center justify-center"
         >
           {isMuted ? <FontAwesomeIcon icon={faVolumeXmark} /> : <FontAwesomeIcon icon={faVolumeHigh} />}
+        </button>
+      </div>
+      <p className="text-xl mt-4"> Please check the audio before transcribe </p>
+      <p className="text-xl">
+        or&nbsp;
+        <button>
+          <a href={audioURL} download>
+             <span className="text-orange-500 cursor-pointer hover:shadow-orange-500 hover:text-shadow-[1px_0_10px_var(--tw-shadow-color)] duration-300'">download</span>
+          </a>
+        </button>
+      </p>
+      <div className=' w-11/12 absolute bottom-10 flex flex-row justify-between'>
+        <button
+          className={` mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200`}
+          onClick={backToMain}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+        <button
+          className={` mt-4 px-4 py-2 text-white rounded-lg ${audioURL ? "bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200" : "bg-gray-500/50"}`}
+          onClick={goToTranscribe}
+        >
+          <FontAwesomeIcon icon={faArrowRight} />
         </button>
       </div>
     </div>

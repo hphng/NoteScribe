@@ -128,7 +128,7 @@ const Main = () => {
                     </p>
                     <div className='flex flex-row gap-2 items-center justify-center'>
                         {duration > 0 && (
-                            <p> {duration}s </p>
+                            <p> {Math.floor(duration/60)}:{ duration%60 < 10? `0${duration%60}`: duration%60  }</p>
                         )}
                         <FontAwesomeIcon icon={faMicrophone} className={'duration-200' + (
                             recordingStatus ? ' text-red-500 animate-pulse' : ' text-black'
@@ -141,7 +141,7 @@ const Main = () => {
                     </label> a mp3 file
                     <p className='text-xs'>{fileName}</p>
                 </div>
-                <div className=' w-96 mt-10 flex flex-row justify-between'>
+                <div className=' w-11/12 absolute bottom-10 flex flex-row justify-between'>
                     <button
                         onClick={resetAudio}
                         className={` mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200`}
