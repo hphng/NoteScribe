@@ -20,7 +20,7 @@ const Footer = () => {
             <a href="/about" className="text-gray-400 hover:text-orange-500">
               About Me
             </a>
-            <a href="mailto:[YourEmail@example.com]" className="text-gray-400 hover:text-orange-500">
+            <a href="mailto:huyphung3103@gmail.com" className="text-gray-400 hover:text-orange-500">
               Contact
             </a>
             <a href="/privacy" className="text-gray-400 hover:text-orange-500">
