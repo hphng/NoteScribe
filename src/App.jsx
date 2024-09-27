@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import NavBar from './components/Navbar'
 import Main from './pages/Main'
 import About from './pages/About'
-import AudioPlayer from './components/AudioPlayer'
+import AudioPlayer from './pages/AudioPlayer'
 import Footer from './components/Footer'
 
 export default function App() {
