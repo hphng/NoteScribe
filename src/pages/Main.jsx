@@ -86,6 +86,10 @@ const Main = () => {
     }, [recordingStatus]);
     //______________________ HANDLE UPLOAD RECORD ______________________
     const handleFileUpload = (e) => {
+        //if upload file, delete audio recording
+        setRecordingStatus(false);
+        setDuration(0);
+        //get the file
         const file = e.target.files[0];
         if (file) {
             console.log('File selected:', file.type);
