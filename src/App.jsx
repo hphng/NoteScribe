@@ -5,6 +5,7 @@ import Main from './pages/Main'
 import About from './pages/About'
 import AudioPlayer from './pages/AudioPlayer'
 import Footer from './components/Footer'
+import Loading from './components/Loading'
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
             <Route path="/" element={<Main />} />
             <Route path="/about" element={<About />} />
             <Route path="/test" element={<AudioPlayer />} />
+            <Route path="/loading" element={<Loading />} />
           </Routes>
         </div>
         <Footer />
