@@ -18,8 +18,8 @@ const NavBar = () => {
           <Link to="/" className="">Note<span className="text-orange-500">Scribe</span></Link>
         </h2>
         <ul className="flex space-x-4">
-          <li><Link to="/" className="hover:text-gray-300">Home</Link></li>
-          <li><Link to="/about" className="hover:text-gray-300">About</Link></li>
+          <li><Link to="/" className="hover:text-orange-500">Home</Link></li>
+          <li><Link to="/about" className="hover:text-orange-500">About</Link></li>
         </ul>
       </div>
     </nav>
