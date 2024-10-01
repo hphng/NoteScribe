@@ -4,11 +4,11 @@ import { faGithub, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-ic
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-8 w-full mt-auto">
+    <footer className="bg-gray-900 text-white py-8 mt-auto mobile:w-full">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="flex flex-row mobile:flex-col justify-between items-center">
           {/* Logo and About */}
-          <div className="mb-4 md:mb-0">
+          <div className="mb-4 mobile:text-center mobile:px-4 mobile:mb-8">
             <h2 className="text-2xl font-bold text-orange-500">NoteScribe</h2>
             <p className="text-gray-400 mt-2">
               Simplifying your audio recording and transcription needs.
@@ -16,7 +16,7 @@ const Footer = () => {
           </div>
 
           {/* Navigation Links */}
-          <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-6">
+          <div className="flex flex-col items-center space-y-2">
             <a href="/about" className="text-gray-400 hover:text-orange-500">
               About Me
             </a>
