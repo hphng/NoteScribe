@@ -9,7 +9,7 @@ class MyTranscriptionPipeline {
 
     static async getInstance(progress_callback = null) {
         if (this.instance === null) {
-            this.instance = await pipeline(this.task, null, { progress_callback })
+            this.instance = await pipeline(this.task, this.model, { progress_callback })
         }
 
         return this.instance
@@ -43,9 +43,9 @@ async function transcribe(audio) {
         model: MyTranscriptionPipeline.model,
         top_k: 0,
         do_sample: false,
-        chunk_length: 30,
-        stride_length_s,
-        return_timestamps: true,
+        chunk_length_s: 30,
+        stride_length_s: 1,
+        return_timestamps: false,
         callback_function: generationTracker.callbackFunction.bind(generationTracker),
         chunk_callback: generationTracker.chunkCallback.bind(generationTracker)
     })
@@ -113,23 +113,35 @@ class GenerationTracker {
 
     chunkCallback(data) {
         this.chunks.push(data)
-        const [text, { chunks }] = this.pipeline.tokenizer._decode_asr(
+        // const [text, { chunks }] = this.pipeline.tokenizer._decode_asr(
+        //     this.chunks,
+        //     {
+        //         time_precision: this.time_precision,
+        //         return_timestamps: true,
+        //         force_full_sequence: false
+        //     }
+        // )
+        const [text] = this.pipeline.tokenizer._decode_asr(
             this.chunks,
             {
+                return_timestamps: false,  // Ensure timestamps are not being returned
                 time_precision: this.time_precision,
-                return_timestamps: true,
                 force_full_sequence: false
             }
-        )
-
-        this.processed_chunks = chunks.map((chunk, index) => {
-            return this.processChunk(chunk, index)
-        })
-
-
+        );
+        this.processed_chunks.push({ text: text.trim() });
         createResultMessage(
-            this.processed_chunks, false, this.getLastChunkTimestamp()
-        )
+            this.processed_chunks, false
+        );
+
+        // this.processed_chunks = chunks.map((chunk, index) => {
+        //     return this.processChunk(chunk, index)
+        // })
+
+
+        // createResultMessage(
+        //     this.processed_chunks, false, this.getLastChunkTimestamp()
+        // )
     }
 
     getLastChunkTimestamp() {
@@ -139,31 +151,54 @@ class GenerationTracker {
     }
 
     processChunk(chunk, index) {
-        const { text, timestamp } = chunk
-        const [start, end] = timestamp
-
+        // const { text, timestamp } = chunk
+        // const [start, end] = timestamp
+        // console.log('start', start);
+        // console.log('end', end);
+        // return {
+        //     index,
+        //     text: `${text.trim()}`,
+        //     start: Math.round(start),
+        //     end: Math.round(end) || Math.round(start + this.stride_length_s)
+        // }
+        const { text } = chunk;
         return {
             index,
             text: `${text.trim()}`,
-            start: Math.round(start),
-            end: Math.round(end) || Math.round(start + 0.9 * this.stride_length_s)
         }
 
     }
 }
 
-function createResultMessage(results, isDone, completedUntilTimestamp) {
+// function createResultMessage(results, isDone, completedUntilTimestamp) {
+//     self.postMessage({
+//         type: MessageTypes.RESULT,
+//         results,
+//         isDone,
+//         completedUntilTimestamp
+//     })
+// }
+
+// function createPartialResultMessage(result) {
+//     self.postMessage({
+//         type: MessageTypes.RESULT_PARTIAL,
+//         result
+//     })
+// }
+
+function createResultMessage(results, isDone) {
     self.postMessage({
         type: MessageTypes.RESULT,
-        results,
-        isDone,
-        completedUntilTimestamp
-    })
+        results: results.slice(-1)[0].text,  // Only send the text of each chunk
+        isDone
+    });
 }
 
 function createPartialResultMessage(result) {
     self.postMessage({
         type: MessageTypes.RESULT_PARTIAL,
-        result
-    })
+        result: {
+            text: result.text  // Only send the text
+        }
+    });
 }
