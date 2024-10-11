@@ -81,6 +81,9 @@ const Transcribe = () => {
     <div className='min-h-screen flex flex-col items-center justify-center'>
       <h1 className='text-3xl font-bold'>Transcribe</h1>
       <button className="border-2 border-black" onClick={handleFormSubmission}>Submit</button>
+      {downloading && <p>Downloading...</p>}
+      {loading && <p>Loading...</p>}
+      {finished && <p>{output}</p>}
     </div>
   )
 }

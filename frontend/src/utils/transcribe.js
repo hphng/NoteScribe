@@ -43,8 +43,8 @@ async function transcribe(audio) {
         model: MyTranscriptionPipeline.model,
         top_k: 0,
         do_sample: false,
-        chunk_length_s: 30,
-        stride_length_s: 1,
+        chunk_length_s: 15,
+        stride_length_s: 5,
         return_timestamps: false,
         callback_function: generationTracker.callbackFunction.bind(generationTracker),
         chunk_callback: generationTracker.chunkCallback.bind(generationTracker)
