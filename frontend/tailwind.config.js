@@ -30,6 +30,9 @@ export default {
         { values: theme('textShadow') }
       )
     }),
-    require('tailwind-scrollbar'),
+    require('tailwind-scrollbar')({ 
+      preferredStrategy: 'pseudoelements',
+      nocompatible: true
+    }),
   ],
 }

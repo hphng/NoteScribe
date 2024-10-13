@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { MessageTypes } from '../utils/data'
+import Loading from './Loading'
 
 const Transcribe = ({ audioURL }) => {
   // const [file, setFile] = useState(null)
@@ -35,8 +36,8 @@ const Transcribe = ({ audioURL }) => {
         case 'RESULT':
           let result = e.data.results
           const lastResult = result.slice(-1)
-          if(['.', ',', '!', '?', ';', ':'].includes(lastResult)) {
-              result = result.slice(0, -1);
+          if (['.', ',', '!', '?', ';', ':'].includes(lastResult)) {
+            result = result.slice(0, -1);
           }
           setOutput(result)
           console.log(result)
@@ -51,7 +52,7 @@ const Transcribe = ({ audioURL }) => {
     worker.current.addEventListener('message', onMessageReceived)
 
     return () => worker.current.removeEventListener('message', onMessageReceived)
-  })
+  }, [])
 
   useEffect(() => {
     // Start or continue typing effect whenever output updates
@@ -107,21 +108,50 @@ const Transcribe = ({ audioURL }) => {
       model_name
     })
   }
+
+
+  const renderButton = () => (
+    <button
+      className="mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center"
+      onClick={!output && !downloading && !loading ? handleFormSubmission : undefined}
+    >
+      {/* {(downloading || loading) && <Loading className="mr-2" />} */}
+      { finished ? 'Transcribe' : loading || downloading ? 'Transcribing' : 'Transcribeasd' }
+
+    </button>
+  );
   return (
     <div className='flex flex-col items-center justify-center'>
-      <button
+      {/* <button
         className="mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200"
         onClick={handleFormSubmission}
       >
         Transcribe
-      </button>
+      </button> */}
       {/* {downloading && <p>Downloading...</p>}
       {loading && <p>Loading...</p>} */}
-      <div className="mt-4 w-full p-4 max-w-96 max-h-[300px] overflow-auto shadow-md shadow-orange-500 border-2 border-black text-left rounded-xl">
-        {typedOutput && (
-          <p className="text-md ">{typedOutput}</p>
-        )}
-      </div>
+
+      {output ? (
+        <>
+          {renderButton()}
+          <div className="mt-4 p-4 w-96 h-[300px] overflow-y-scroll shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
+              scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200">
+            {typedOutput && (
+              <p className="text-md ">{typedOutput}</p>
+            )}
+          </div>
+        </>
+      ) : downloading ? (
+        <>
+          {renderButton()}
+          <Loading />
+        </>
+      ) : (
+        <div className='h-[300px]'>
+          {renderButton()}
+        </div>
+      )}
+
     </div>
   )
 }
