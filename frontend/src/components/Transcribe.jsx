@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { MessageTypes } from '../utils/data'
 import Loading from './Loading'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -118,7 +118,7 @@ const Transcribe = ({ audioURL }) => {
     element.click();
   }
 
-  const transcribeButton = () => (
+  const transcribeButton = useMemo(() => (
     <button
       className="mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center"
       onClick={!output && !downloading && !loading ? handleFormSubmission : undefined}
@@ -138,18 +138,18 @@ const Transcribe = ({ audioURL }) => {
         )
       }
     </button>
-  );
+  ), [output, downloading, loading, finished, handleFormSubmission]);
 
   return (
     <div className='flex flex-col items-center justify-center'>
-      {transcribeButton()}
+      {transcribeButton}
       {output ? (
-          <div className="mt-4 p-4 w-96 h-[300px] overflow-y-scroll shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
+        <div className="mt-4 p-4 w-96 h-[300px] overflow-y-scroll shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
               scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200">
-            {typedOutput && (
-              <p className="text-md ">{typedOutput}</p>
-            )}
-          </div>
+          {typedOutput && (
+            <p className="text-md ">{typedOutput}</p>
+          )}
+        </div>
       ) : downloading ? (
         <div className='h-[300px]'>
           <Loading />
@@ -157,11 +157,19 @@ const Transcribe = ({ audioURL }) => {
       ) : null}
 
       {/* Export and Save Buttons */}
-        <button className='mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200'
-          onClick={exportToTxt}
-        >
-          export
-        </button>
+      {finished && (
+        <div className='w-full flex flex-row justify-evenly'>
+          <button className='mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200'
+            onClick={exportToTxt}
+          >
+            export
+          </button>
+          <button className='mt-4 px-4 py-2 text-orange-500 rounded-lg border-[3px] border-orange-500 
+                            hover:shadow-md hover:bg-orange-600 hover:text-white hover:border-orange-600 duration-200'>
+            save
+          </button>
+        </div>
+      )}
     </div>
   )
 }
