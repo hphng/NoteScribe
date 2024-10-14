@@ -46,6 +46,8 @@ const Transcribe = ({ audioURL }) => {
           setFinished(true)
           console.log("DONE")
           break;
+        default:
+          break;
       }
     }
 
