@@ -105,7 +105,7 @@ const Main = () => {
     //navigate to the editor page
     const goToAudioPlayer = async () => {
         const audioDuration = await getBlobDuration(audioURL);
-        navigate('/test', { state: { audioURL, audioDuration } });
+        navigate('/transcribe', { state: { audioURL, audioDuration } });
     }
 
     //reset audio

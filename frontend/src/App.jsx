@@ -5,9 +5,7 @@ import Main from './pages/Main'
 import About from './pages/About'
 import AudioPlayer from './pages/AudioPlayer'
 import Footer from './components/Footer'
-import Loading from './components/Loading'
 import Translate from './components/Translate'
-import Transcribe from './components/Transcribe'
 
 export default function App() {
   return (
@@ -18,10 +16,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/about" element={<About />} />
-            <Route path="/test" element={<AudioPlayer />} />
-            <Route path="/loading" element={<Loading />} />
+            <Route path="/transcribe" element={<AudioPlayer />} />
             <Route path="/translate" element={<Translate />} />
-            <Route path="/transcribe" element={<Transcribe />} />
           </Routes>
         </div>
         <Footer />

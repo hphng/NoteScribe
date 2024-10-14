@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { MessageTypes } from '../utils/data'
 import Loading from './Loading'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
 const Transcribe = ({ audioURL }) => {
-  // const [file, setFile] = useState(null)
-  // const [audioStream, setAudioStream] = useState(null)
   const [output, setOutput] = useState(null)
   const [downloading, setDownloading] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -109,49 +109,59 @@ const Transcribe = ({ audioURL }) => {
     })
   }
 
+  const exportToTxt = () => {
+    const element = document.createElement("a");
+    const file = new Blob([output], { type: 'text/plain' });
+    element.href = URL.createObjectURL(file);
+    element.download = "transcription.txt";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
 
-  const renderButton = () => (
+  const transcribeButton = () => (
     <button
       className="mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center"
       onClick={!output && !downloading && !loading ? handleFormSubmission : undefined}
     >
-      {/* {(downloading || loading) && <Loading className="mr-2" />} */}
-      { finished ? 'Transcribe' : loading || downloading ? 'Transcribing' : 'Transcribeasd' }
-
+      {
+        finished ? (
+          <div>Transcribe</div>
+        ) : loading || downloading ? (
+          <>
+            <FontAwesomeIcon icon={faCircleNotch} className='animate-spin mr-2' />
+            <div>Transcribing</div>
+          </>
+        ) : (
+          <>
+            <div>Transcribe</div>
+          </>
+        )
+      }
     </button>
   );
+
   return (
     <div className='flex flex-col items-center justify-center'>
-      {/* <button
-        className="mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200"
-        onClick={handleFormSubmission}
-      >
-        Transcribe
-      </button> */}
-      {/* {downloading && <p>Downloading...</p>}
-      {loading && <p>Loading...</p>} */}
-
+      {transcribeButton()}
       {output ? (
-        <>
-          {renderButton()}
           <div className="mt-4 p-4 w-96 h-[300px] overflow-y-scroll shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
               scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200">
             {typedOutput && (
               <p className="text-md ">{typedOutput}</p>
             )}
           </div>
-        </>
       ) : downloading ? (
-        <>
-          {renderButton()}
-          <Loading />
-        </>
-      ) : (
         <div className='h-[300px]'>
-          {renderButton()}
+          <Loading />
         </div>
-      )}
+      ) : null}
 
+      {/* Export and Save Buttons */}
+        <button className='mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200'
+          onClick={exportToTxt}
+        >
+          export
+        </button>
     </div>
   )
 }

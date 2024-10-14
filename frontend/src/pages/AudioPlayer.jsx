@@ -121,7 +121,7 @@ const AudioPlayer = () => {
         </button>
         &nbsp;here
       </p>
-      <div className=' w-11/12 absolute bottom-10 flex flex-row justify-between'>
+      <div className='absolute bottom-10 left-[3%] flex flex-row justify-between'>
         <button
           className={` mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200`}
           onClick={backToMain}
