@@ -4,7 +4,7 @@ import Loading from './Loading'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 
-const Transcribe = ({ audioURL }) => {
+const Transcribe = ({ audioURL, onTranscribeComplete }) => {
   const [output, setOutput] = useState(null)
   const [downloading, setDownloading] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -60,6 +60,7 @@ const Transcribe = ({ audioURL }) => {
     // Start or continue typing effect whenever output updates
     if (output && currentTypedIndex.current < output.length) {
       startTypingEffect(output);
+      onTranscribeComplete(output)
     }
   }, [output]);
 
@@ -143,7 +144,7 @@ const Transcribe = ({ audioURL }) => {
   ), [output, downloading, loading, finished, handleFormSubmission]);
 
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center justify-center w-full'>
       {transcribeButton}
       {output ? (
         <div className="mt-4 p-4 w-96 h-[300px] overflow-y-scroll shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 

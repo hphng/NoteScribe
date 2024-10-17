@@ -1,14 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faPause, faVolumeHigh, faVolumeXmark, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faPause, faVolumeHigh, faVolumeXmark, faDownload, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from 'react-router-dom'
 import Transcribe from '../components/Transcribe';
+import Translate from "../components/Translate";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
+
+  const [transcribedText, setTranscribedText] = useState('');
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
   const navigate = useNavigate();
@@ -112,15 +116,6 @@ const AudioPlayer = () => {
           {isMuted ? <FontAwesomeIcon icon={faVolumeXmark} /> : <FontAwesomeIcon icon={faVolumeHigh} />}
         </button>
       </div>
-      <p className="text-xl mt-4"> Please check the audio before transcribe 
-        or&nbsp;
-        <button>
-          <a href={audioURL} download>
-             <span className="text-orange-500 cursor-pointer hover:shadow-orange-500 hover:text-shadow-[1px_0_10px_var(--tw-shadow-color)] duration-300'">download</span>
-          </a>
-        </button>
-        &nbsp;here
-      </p>
       <div className='absolute bottom-10 left-[3%] flex flex-row justify-between'>
         <button
           className={` mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200`}
@@ -129,13 +124,37 @@ const AudioPlayer = () => {
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
       </div>
-      {/* <button
-          className={` mt-4 px-4 py-2 text-white rounded-lg ${audioURL ? "bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200" : "bg-gray-500/50"}`}
-          onClick={goToTranscribe}
-        >
-          Transcribe
-        </button> */}
-        <Transcribe audioURL={audioURL} />
+      <button className="absolute bottom-10 right-[3%] flex flex-row justify-between">
+        <a href={audioURL} download>
+          <span className="text-white w-10 aspect-square rounded-full fa-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center justify-center">
+            <FontAwesomeIcon icon={faDownload} />
+          </span>
+        </a>
+      </button>
+      <TabGroup className="flex flex-col items-center mt-5 w-full">
+        <TabList className="flex flex-row">
+          <Tab className={({ selected }) =>
+            `px-4 py-2 text-white rounded-tl-full rounded-bl-full ${selected ? 'bg-orange-500' : 'bg-gray-300'}`
+          }>
+            Transcribe
+          </Tab>
+          <Tab className={({ selected }) =>
+            `px-4 py-2 text-white rounded-tr-full rounded-br-full ${selected ? 'bg-orange-500' : 'bg-gray-300'}`
+          }>
+            Translate
+          </Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel unmount={false}>
+            <Transcribe audioURL={audioURL}
+              onTranscribeComplete={setTranscribedText}
+            />
+          </TabPanel>
+          <TabPanel unmount={false}>
+            <Translate text={transcribedText} />
+          </TabPanel>
+        </TabPanels>
+      </TabGroup>
     </div>
   );
 };
