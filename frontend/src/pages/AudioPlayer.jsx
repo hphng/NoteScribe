@@ -16,6 +16,7 @@ const AudioPlayer = () => {
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
 
+  const [documentName, setDocumentName] = useState('');
   const [transcribedText, setTranscribedText] = useState('');
   const [translatedText, setTranslatedText] = useState('no translation available');
   const [translateLanguage, setTranslateLanguage] = useState('');
@@ -91,6 +92,7 @@ const AudioPlayer = () => {
     navigate(-1);
   };
 
+  //Modal operations
   const openModal = () => {
     setIsModalOpen(true);
   }
@@ -101,6 +103,7 @@ const AudioPlayer = () => {
 
   const saveDocument = () => {
     //save document to database
+    console.log('Document saved');
   }
 
   return (
@@ -199,6 +202,8 @@ const AudioPlayer = () => {
                   name="full_name"
                   type="text"
                   placeholder="Document Name"
+                  value={documentName}
+                  onChange={(e) => setDocumentName(e.target.value)}
                   className='rounded-lg flex-grow w-full p-2 bg-orange-100 shadow-md border-2 border-black 
                             data-[focus]:outline-offset-1 data-[focus]:shadow-orange-500'
                 />

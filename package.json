@@ -8,9 +8,9 @@
     "dev": "concurrently \"npm run dev:fe\" \"npm run dev:be\"",
     "dev:fe": "cd frontend && vite",
     "dev:be": "cd backend && nodemon server.js",
-    "build": "vite build",
+    "build": "cd frontend && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "cd frontend && vite preview"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
