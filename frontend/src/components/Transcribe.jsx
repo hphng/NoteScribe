@@ -160,7 +160,7 @@ const Transcribe = ({ audioURL, onTranscribeComplete }) => {
       ) : null}
 
       {/* Export and Save Buttons */}
-      {finished && (
+      {/* {finished && (
         <div className='w-full flex flex-row justify-evenly'>
           <button className='mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200'
             onClick={exportToTxt}
@@ -172,7 +172,7 @@ const Transcribe = ({ audioURL, onTranscribeComplete }) => {
             save
           </button>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

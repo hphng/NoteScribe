@@ -118,14 +118,10 @@ const AudioPlayer = () => {
       </div>
       <TabGroup className="flex flex-col items-center mt-5 w-full">
         <TabList className="flex flex-row">
-          <Tab className={({ selected }) =>
-            `px-4 py-2 text-white rounded-tl-full rounded-bl-full ${selected ? 'bg-orange-500' : 'bg-gray-300'}`
-          }>
+          <Tab className="px-4 py-2 text-white rounded-tl-full rounded-bl-full bg-gray-300 data-[selected]:bg-orange-500">
             Transcribe
           </Tab>
-          <Tab className={({ selected }) =>
-            `px-4 py-2 text-white rounded-tr-full rounded-br-full ${selected ? 'bg-orange-500' : 'bg-gray-300'}`
-          }>
+          <Tab className= "px-4 py-2 text-white rounded-tr-full rounded-br-full bg-gray-300 data-[selected]:bg-orange-500">
             Translate
           </Tab>
         </TabList>
