@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react'
 import { MessageTypes } from '../utils/data'
 import Loading from './Loading'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faPlay } from '@fortawesome/free-solid-svg-icons';
 
 const Transcribe = ({ audioURL, onTranscribeComplete }) => {
   const [output, setOutput] = useState(null)
@@ -123,20 +123,20 @@ const Transcribe = ({ audioURL, onTranscribeComplete }) => {
 
   const transcribeButton = useMemo(() => (
     <button
-      className="mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center"
+      className="mt-4 w-8 aspect-square text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center justify-center"
       onClick={!output && !downloading && !loading ? handleFormSubmission : undefined}
+      disabled={finished}
     >
       {
         finished ? (
-          <div>Transcribe</div>
+          <FontAwesomeIcon icon={faPlay} />
         ) : loading || downloading ? (
           <>
-            <FontAwesomeIcon icon={faCircleNotch} className='animate-spin mr-2' />
-            <div>Transcribing</div>
+            <FontAwesomeIcon icon={faCircleNotch} className='animate-spin' />
           </>
         ) : (
           <>
-            <div>Transcribe</div>
+            <FontAwesomeIcon icon={faPlay} />
           </>
         )
       }

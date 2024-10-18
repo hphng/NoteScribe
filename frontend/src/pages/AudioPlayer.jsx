@@ -115,13 +115,18 @@ const AudioPlayer = () => {
         >
           {isMuted ? <FontAwesomeIcon icon={faVolumeXmark} /> : <FontAwesomeIcon icon={faVolumeHigh} />}
         </button>
+        <button className="text-black ml-2 w-8 aspect-square rounded-full fa-sm bg-orange-500/50 hover:bg-orange-500/80 duration-200 flex items-center justify-center">
+          <a href={audioURL} download>
+            <FontAwesomeIcon icon={faDownload} />
+          </a>
+        </button>
       </div>
       <TabGroup className="flex flex-col items-center mt-5 w-full">
         <TabList className="flex flex-row">
           <Tab className="px-4 py-2 text-white rounded-tl-full rounded-bl-full bg-gray-300 data-[selected]:bg-orange-500">
             Transcribe
           </Tab>
-          <Tab className= "px-4 py-2 text-white rounded-tr-full rounded-br-full bg-gray-300 data-[selected]:bg-orange-500">
+          <Tab className="px-4 py-2 text-white rounded-tr-full rounded-br-full bg-gray-300 data-[selected]:bg-orange-500">
             Translate
           </Tab>
         </TabList>
@@ -144,13 +149,6 @@ const AudioPlayer = () => {
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
       </div>
-      <button className="absolute bottom-10 right-[3%] flex flex-row justify-between">
-        <a href={audioURL} download>
-          <span className="text-white w-10 aspect-square rounded-full fa-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center justify-center">
-            <FontAwesomeIcon icon={faDownload} />
-          </span>
-        </a>
-      </button>
     </div>
   );
 };
