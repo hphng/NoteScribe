@@ -10,7 +10,7 @@ const Translate = ({ text }) => {
   const [progressItems, setProgressItems] = useState([]);
 
   // Inputs and outputs
-  const [input, setInput] = useState('I love walking my dog.');
+  const [input, setInput] = useState(text);
   const [sourceLanguage, setSourceLanguage] = useState('eng_Latn');
   const [targetLanguage, setTargetLanguage] = useState('fra_Latn');
   const [output, setOutput] = useState('');
@@ -95,11 +95,11 @@ const Translate = ({ text }) => {
         <div className='textbox-container flex flex-row justify-evenly gap-44'>
           <textarea
             value={text} onChange={e => setInput(e.target.value)}
-            className="mt-4 p-4 w-96 overflow-y-scroll shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
+            className="mt-4 p-4 w-96 overflow-y-scroll bg-orange-50 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
                       scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200"></textarea>
           <textarea
             value={output} readOnly
-            className="mt-4 p-4 w-96 h-[300px] overflow-y-scroll shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
+            className="mt-4 p-4 w-96 h-[300px] overflow-y-scroll bg-orange-100 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
                       scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200"></textarea>
         </div>
       </div>
