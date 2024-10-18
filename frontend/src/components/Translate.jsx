@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import LanguageSelector from '../pages/LanguageSelector';
 import Progress from '../pages/Progress';
+import { LANGUAGES } from '../utils/data';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
-const Translate = ({ text }) => {
+const Translate = ({ text, onTranslationComplete, onTranslateLanguage }) => {
   const [ready, setReady] = useState(true);
   const [disabled, setDisabled] = useState(false);
   const [progressItems, setProgressItems] = useState([]);
@@ -59,6 +60,7 @@ const Translate = ({ text }) => {
         case 'update':
           // Generation update: update the output text.
           setOutput(e.data.output);
+          onTranslationComplete(e.data.output);
           break;
 
         case 'complete':
@@ -81,6 +83,12 @@ const Translate = ({ text }) => {
       src_lang: sourceLanguage,
       tgt_lang: targetLanguage,
     });
+    for (let key in LANGUAGES) {
+      if (LANGUAGES[key] === targetLanguage) {
+        onTranslateLanguage(key);
+        break;
+      }
+    }
   }
 
 

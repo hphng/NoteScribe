@@ -4,7 +4,11 @@ import { faPlay, faPause, faVolumeHigh, faVolumeXmark, faDownload, faArrowLeft }
 import { useLocation, useNavigate } from 'react-router-dom'
 import Transcribe from '../components/Transcribe';
 import Translate from "../components/Translate";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
+import {
+  Tab, TabGroup, TabList, TabPanel, TabPanels,
+  Description, Dialog, DialogPanel, DialogBackdrop, DialogTitle,
+  Field, Input, Label
+} from '@headlessui/react'
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -13,6 +17,10 @@ const AudioPlayer = () => {
   const [isMuted, setIsMuted] = useState(false);
 
   const [transcribedText, setTranscribedText] = useState('');
+  const [translatedText, setTranslatedText] = useState('no translation available');
+  const [translateLanguage, setTranslateLanguage] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
   const navigate = useNavigate();
@@ -83,6 +91,18 @@ const AudioPlayer = () => {
     navigate(-1);
   };
 
+  const openModal = () => {
+    setIsModalOpen(true);
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
+  const saveDocument = () => {
+    //save document to database
+  }
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       {!transcribedText && (<h1 className="text-6xl font-bold pb-4">Your <span className='bold text-orange-500'>Scribe</span></h1>)}
@@ -132,12 +152,17 @@ const AudioPlayer = () => {
         </TabList>
         <TabPanels>
           <TabPanel unmount={false}>
-            <Transcribe audioURL={audioURL}
+            <Transcribe
+              audioURL={audioURL}
               onTranscribeComplete={setTranscribedText}
             />
           </TabPanel>
           <TabPanel unmount={false}>
-            <Translate text={transcribedText} />
+            <Translate
+              text={transcribedText}
+              onTranslationComplete={setTranslatedText}
+              onTranslateLanguage={setTranslateLanguage}
+            />
           </TabPanel>
         </TabPanels>
       </TabGroup>
@@ -149,6 +174,49 @@ const AudioPlayer = () => {
           <FontAwesomeIcon icon={faArrowLeft} />
         </button>
       </div>
+
+      {/* Button to trigger modal */}
+      <div className="mt-4">
+        <button
+          onClick={openModal}
+          className="px-4 py-2 text-white bg-green-500 hover:bg-green-600 rounded-lg"
+          disabled={!transcribedText || !translatedText}
+        >
+          Save
+        </button>
+      </div>
+      <Dialog open={isModalOpen} onClose={closeModal} className="relative z-50">
+        <DialogBackdrop className="fixed inset-0 bg-black/30" />
+        <div className="fixed inset-0 w-screen p-4">
+          <div className="flex min-h-full items-center justify-center">
+            <DialogPanel
+              className="max-w-lg max-h-96 overflow-y-auto overflow-hidden space-y-4 border bg-orange-100 p-12 rounded-lg
+                        scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200"
+            >
+              <DialogTitle className="font-bold text-3xl text-center">Your document</DialogTitle>
+              <Field>
+                <Input
+                  name="full_name"
+                  type="text"
+                  placeholder="Document Name"
+                  className='rounded-lg flex-grow w-full p-2 bg-orange-100 shadow-md border-2 border-black 
+                            data-[focus]:outline-offset-1 data-[focus]:shadow-orange-500'
+                />
+              </Field>
+              <Description className='font-bold'> Transcription (English)</Description>
+              <p>{transcribedText ? transcribedText : "no transcription available"}</p>
+              <Description className='font-bold'>
+                Translation ({translateLanguage ? translateLanguage : "no language selected"})
+              </Description>
+              <p>{translatedText ? translatedText : "no translation available"}</p>
+              <div className="flex gap-4 pt-6">
+                <button onClick={closeModal} className="px-4 py-2 text-white bg-orange-500 hover:bg-orange-600 rounded-lg">Cancel</button>
+                <button onClick={saveDocument} className="px-4 py-2 text-white bg-orange-500 hover:bg-orange-600 rounded-lg">Save</button>
+              </div>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 };
