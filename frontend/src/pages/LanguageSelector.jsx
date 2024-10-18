@@ -1,14 +1,13 @@
 import React from 'react';
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import { LANGUAGES } from '../utils/data.js';
 
 export default function LanguageSelector({ type, onChange, defaultLanguage }) {
   return (
     <div className='shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg w-full'>
       {/* <label>{type}: </label> */}
-      <select 
-        onChange={onChange} 
-        defaultValue={defaultLanguage} 
+      <select
+        onChange={onChange}
+        defaultValue={defaultLanguage}
         className='scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar scrollbar-thumb-orange-500 scrollbar-track-orange-200
                   rounded-lg flex-grow w-full p-2'
       >

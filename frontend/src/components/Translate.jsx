@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
 import LanguageSelector from '../pages/LanguageSelector';
 import Progress from '../pages/Progress';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 const Translate = ({ text }) => {
-  const [ready, setReady] = useState(null);
+  const [ready, setReady] = useState(true);
   const [disabled, setDisabled] = useState(false);
   const [progressItems, setProgressItems] = useState([]);
 
@@ -103,15 +105,16 @@ const Translate = ({ text }) => {
       </div>
 
       <button disabled={disabled} onClick={translate}
-              className='mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center'
+        className=' absolute fa-4x text-orange-500 hover:text-orange-600 hover:scale-125 duration-200 flex items-center'
       >
-        Translate
+        {ready ? (
+          <FontAwesomeIcon icon={faArrowRight} />
+        ) : (
+          <FontAwesomeIcon icon={faCircleNotch} className="animate-spin" />
+        )}
       </button>
 
-      <div className='progress-bars-container'>
-        {ready === false && (
-          <label>Loading models... (only run once)</label>
-        )}
+      <div className='absolute top-2/3'>
         {progressItems.map(data => (
           <div key={data.file}>
             <Progress text={data.file} percentage={data.progress} />
