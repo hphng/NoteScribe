@@ -85,7 +85,7 @@ const Translate = ({ text }) => {
   return (
     <div className="flex flex-col justify-center items-center w-full pt-8">
       <div className='w-full'>
-        <div className='language-container w-full flex flex-row justify-evenly gap-44'>
+        <div className='language-container w-full flex flex-row justify-evenly gap-44 '>
           <LanguageSelector type={"Source"} defaultLanguage={"eng_Latn"} onChange={x => setSourceLanguage(x.target.value)} />
           <LanguageSelector type={"Target"} defaultLanguage={"fra_Latn"} onChange={x => setTargetLanguage(x.target.value)} />
         </div>
@@ -102,7 +102,11 @@ const Translate = ({ text }) => {
         </div>
       </div>
 
-      <button disabled={disabled} onClick={translate}>Translate</button>
+      <button disabled={disabled} onClick={translate}
+              className='mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center'
+      >
+        Translate
+      </button>
 
       <div className='progress-bars-container'>
         {ready === false && (

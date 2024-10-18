@@ -85,7 +85,7 @@ const AudioPlayer = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-6xl font-bold pb-4">Your <span className='bold text-orange-500'>Scribe</span></h1>
+      {!transcribedText && (<h1 className="text-6xl font-bold pb-4">Your <span className='bold text-orange-500'>Scribe</span></h1>)}
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} preload="auto">
         <source src={audioURL} type="audio/mp3" />
         Your browser does not support the audio element.
@@ -116,21 +116,6 @@ const AudioPlayer = () => {
           {isMuted ? <FontAwesomeIcon icon={faVolumeXmark} /> : <FontAwesomeIcon icon={faVolumeHigh} />}
         </button>
       </div>
-      <div className='absolute bottom-10 left-[3%] flex flex-row justify-between'>
-        <button
-          className={` mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200`}
-          onClick={backToMain}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
-      </div>
-      <button className="absolute bottom-10 right-[3%] flex flex-row justify-between">
-        <a href={audioURL} download>
-          <span className="text-white w-10 aspect-square rounded-full fa-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center justify-center">
-            <FontAwesomeIcon icon={faDownload} />
-          </span>
-        </a>
-      </button>
       <TabGroup className="flex flex-col items-center mt-5 w-full">
         <TabList className="flex flex-row">
           <Tab className={({ selected }) =>
@@ -155,6 +140,21 @@ const AudioPlayer = () => {
           </TabPanel>
         </TabPanels>
       </TabGroup>
+      <div className='absolute bottom-10 left-[3%] flex flex-row justify-between'>
+        <button
+          className={` mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200`}
+          onClick={backToMain}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </button>
+      </div>
+      <button className="absolute bottom-10 right-[3%] flex flex-row justify-between">
+        <a href={audioURL} download>
+          <span className="text-white w-10 aspect-square rounded-full fa-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center justify-center">
+            <FontAwesomeIcon icon={faDownload} />
+          </span>
+        </a>
+      </button>
     </div>
   );
 };
