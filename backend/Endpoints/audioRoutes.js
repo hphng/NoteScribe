@@ -57,10 +57,10 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
         const s3AudioUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${s3Key}`;
 
 
-        // Store the audio data in the MONGO
-
-
+        // Store the audio data in the mongoDB
         
+
+
         return res.status(200).json({ message: 'Audio data has been posted to the audio route sucessfully.' });
     } catch (error) {
         console.error('Error posting audio data:', error.message);
