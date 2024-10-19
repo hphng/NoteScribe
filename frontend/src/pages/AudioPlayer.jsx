@@ -110,9 +110,35 @@ const AudioPlayer = () => {
     setIsModalOpen(false);
   }
 
-  const saveDocument = () => {
+  const saveDocument = async () => {
     //save document to database
     console.log('Document saved');
+    const formData = new FormData();
+    //apppend form data
+    formData.append('documentName', documentName);
+    formData.append('transcription', transcribedText);
+    formData.append('translation', translatedText);
+    formData.append('language', translateLanguage);
+    //fetch audio file
+    const blob = await fetch(audioURL).then(res => res.blob());
+    formData.append('audio', blob, 'audio.mp3');
+
+    try {
+      axios.post('http://localhost:5000/api/audio', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+        .then((res) => {
+          console.log(res.data);
+          closeModal();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }catch (err) {
+      console.log(err);
+    }
   }
 
   return (
