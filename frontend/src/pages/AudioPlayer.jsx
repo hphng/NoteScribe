@@ -9,6 +9,7 @@ import {
   Description, Dialog, DialogPanel, DialogBackdrop, DialogTitle,
   Field, Input, Label
 } from '@headlessui/react'
+import axios from "axios";
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -21,6 +22,8 @@ const AudioPlayer = () => {
   const [translatedText, setTranslatedText] = useState('no translation available');
   const [translateLanguage, setTranslateLanguage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [test, setTest] = useState('');
 
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
@@ -68,6 +71,12 @@ const AudioPlayer = () => {
   }
 
   useEffect(() => {
+    // const fetchData = async () => {
+    //   const result = await axios.get('http://localhost:5000/api/audio');
+    //   // setTest(result.data.message);
+    //   console.log(result.data)
+    // }
+    // fetchData();
     const audio = audioRef.current;
     if (!audioDuration) {
       audioDuration = audio.duration;
