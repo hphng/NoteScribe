@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import Audio from '../Database Schema/Audio.js';
 import dotenv from 'dotenv';
 
 dotenv.config({path: '../.env'});
@@ -33,8 +34,6 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
     console.log("IN POST ROUTE OF /audio")
     const { documentName, transcription, translation, language } = req.body;
     const audioFile = req.file;
-    console.log("AUDIO FILE: ", audioFile)
-    console.log("DOCUMENT NAME: ", req.body)
     if (!audioFile) {
         return res.status(400).json({ message: 'Audio file is required.' });
     }
@@ -58,10 +57,16 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
 
 
         // Store the audio data in the mongoDB
-        
-
-
-        return res.status(200).json({ message: 'Audio data has been posted to the audio route sucessfully.' });
+        const newAudioData = {
+            documentName,
+            transcription,
+            translation,
+            language,
+            s3AudioUrl,
+        };
+        console.log('Audio data:', newAudioData);
+        const newAudio = await new Audio(newAudioData).save();
+        return res.status(200).json(newAudio);
     } catch (error) {
         console.error('Error posting audio data:', error.message);
         return res.status(500).json({ message: 'Internal server error.' });
