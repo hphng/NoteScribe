@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 
 import audioRoute from './Endpoints/audioRoutes.js';
 
@@ -31,6 +32,8 @@ const connectToMongoDB = async () => {
       });
     });
   };
+
+connectToMongoDB();
   
 
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
