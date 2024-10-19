@@ -20,6 +20,7 @@ const NavBar = () => {
         <ul className="flex space-x-4">
           <li><Link to="/" className="hover:text-orange-500">Home</Link></li>
           <li><Link to="/about" className="hover:text-orange-500">About</Link></li>
+          <li><Link to="/a" className="hover:text-orange-500">My Audio</Link></li>
         </ul>
       </div>
     </nav>

@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const audioSchema = new mongoose.Schema({
     documentName: {
         type: String,
-        required: true,
         default: "Untitled Document",
     },
     transcription: {

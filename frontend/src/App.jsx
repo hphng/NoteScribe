@@ -6,6 +6,7 @@ import About from './pages/About'
 import AudioPlayer from './pages/AudioPlayer'
 import Footer from './components/Footer'
 import Translate from './components/Translate'
+import DocumentList from './pages/DocumentList'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/transcribe" element={<AudioPlayer />} />
             <Route path="/translate" element={<Translate />} />
+            <Route path="/a" element={<DocumentList />} />
           </Routes>
         </div>
         <Footer />

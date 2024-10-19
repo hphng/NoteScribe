@@ -17,13 +17,11 @@ const AudioPlayer = () => {
   const [duration, setDuration] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
 
-  const [documentName, setDocumentName] = useState('');
+  const [documentName, setDocumentName] = useState('Untitled Document');
   const [transcribedText, setTranscribedText] = useState('');
   const [translatedText, setTranslatedText] = useState('no translation available');
   const [translateLanguage, setTranslateLanguage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const [test, setTest] = useState('');
 
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
@@ -71,12 +69,6 @@ const AudioPlayer = () => {
   }
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   const result = await axios.get('http://localhost:5000/api/audio');
-    //   // setTest(result.data.message);
-    //   console.log(result.data)
-    // }
-    // fetchData();
     const audio = audioRef.current;
     if (!audioDuration) {
       audioDuration = audio.duration;
@@ -124,7 +116,7 @@ const AudioPlayer = () => {
     formData.append('audio', blob, 'audio.mp3');
 
     try {
-      axios.post('http://localhost:5000/api/audio', formData, {
+      axios.post('/api/audio', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
