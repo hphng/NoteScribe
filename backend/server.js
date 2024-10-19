@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
-import audioRoute from './Endpoints/audioRoutes.js';
+import audioRoutes from './Endpoints/audioRoutes.js';
 
 dotenv.config({path: '../.env'}); // Load environment variables from a .env file into process.env
 
@@ -41,7 +41,7 @@ app.use(bodyParser.json({ limit: '10mb' }));
 app.use(cors());
 
 const router = express.Router();
-router.use('/', audioRoute);
+router.use('/', audioRoutes);
 
 app.use('/api', router);
 
