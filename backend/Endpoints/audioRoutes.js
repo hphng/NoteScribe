@@ -31,7 +31,6 @@ audioRoutes.get('/audio/metadata', async (req, res) => {
         if (!audioMetadata) {
             return res.status(404).json({ message: 'Audio metadata not found.' });
         }
-        console.log('Audio metadata:', audioMetadata);
         return res.status(200).json(audioMetadata);
     } catch (error) {
         console.error('Error fetching audio metadata:', error.message);

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const DocumentList = () => {
   const [documents, setDocuments] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch audio data with only ID and document name
@@ -18,10 +20,10 @@ const DocumentList = () => {
     getAudioData();
   }, []);
 
-  const handleClick = (id) => {
-    // Handle the button click (for example, navigate to a details page)
-    console.log(`Document with ID ${id} clicked`);
+  const handleClick = (audioId) => {
+    console.log(`Document with ID ${audioId} clicked`);
     // You can redirect or trigger more actions here
+    navigate(`/a/${audioId}`);
   };
 
   return (

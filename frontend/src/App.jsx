@@ -7,6 +7,7 @@ import AudioPlayer from './pages/AudioPlayer'
 import Footer from './components/Footer'
 import Translate from './components/Translate'
 import DocumentList from './pages/DocumentList'
+import DocumentDetails from './pages/DocumentDetails'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
             <Route path="/transcribe" element={<AudioPlayer />} />
             <Route path="/translate" element={<Translate />} />
             <Route path="/a" element={<DocumentList />} />
+            <Route path="/a/:id" element={<DocumentDetails />}/>
           </Routes>
         </div>
         <Footer />
