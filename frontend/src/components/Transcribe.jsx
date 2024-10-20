@@ -158,21 +158,6 @@ const Transcribe = ({ audioURL, onTranscribeComplete }) => {
           <Loading />
         </div>
       ) : null}
-
-      {/* Export and Save Buttons */}
-      {/* {finished && (
-        <div className='w-full flex flex-row justify-evenly'>
-          <button className='mt-4 px-4 py-2 text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200'
-            onClick={exportToTxt}
-          >
-            export
-          </button>
-          <button className='mt-4 px-4 py-2 text-orange-500 rounded-lg border-[3px] border-orange-500 
-                            hover:shadow-md hover:bg-orange-600 hover:text-white hover:border-orange-600 duration-200'>
-            save
-          </button>
-        </div>
-      )} */}
     </div>
   )
 }
