@@ -8,11 +8,13 @@ const DocumentList = () => {
   const [documents, setDocuments] = useState([]);
   const navigate = useNavigate();
 
+  const baseURL = import.meta.env.VITE_API_URL;
+
   useEffect(() => {
     // Fetch audio data with only ID and document name
     const getAudioData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/audio/metadata');
+        const response = await axios.get(`${baseURL}/api/audio/metadata`);
         const data = response.data;
         setDocuments(data);
       } catch (error) {
