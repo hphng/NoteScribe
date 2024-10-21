@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import Audio from '../Database Schema/Audio.js';
 import dotenv from 'dotenv';
 
@@ -110,9 +110,30 @@ audioRoutes.put('/audio/:id', async (req, res) => {
 })
 
 //DELETE AUDIO DATA
-audioRoutes.delete('/audio/:id', async (req, res) => {
-    const { id } = req.params;
-    return res.status(200).json({ message: `Audio data has been deleted with id: ${id}` });
+audioRoutes.delete('/audio/:audioId', async (req, res) => {
+    const { audioId } = req.params;
+    console.log("IN DELETE ROUTE OF /audio/:audioId")
+    if (!audioId) {
+        return res.status(400).json({ message: 'Audio ID is required.' });
+    }
+    try {
+        const audio = await Audio.findOneAndDelete({ _id: audioId });
+        if (!audio) {
+            return res.status(404).json({ message: `Cannot find audio in db with Id: ${audioId}` });
+        }
+        const s3AudioUrl = audio.s3AudioUrl;
+        const s3Key = s3AudioUrl.split('.com/')[1];
+        const s3Params = {
+            Bucket: process.env.S3_BUCKET_NAME, 
+            Key: s3Key, 
+        };
+        // Delete the file from S3
+        await s3Client.send(new DeleteObjectCommand(s3Params));
+        return res.status(200).json({ message: `Audio with ID ${audioId} has been deleted.` });
+    } catch (error) {
+        console.error('Error deleting audio data:', error.message);
+        return res.status(500).json({ message: 'Internal server error.' });
+    }
 })
 
 export default audioRoutes;

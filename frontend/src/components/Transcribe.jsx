@@ -112,15 +112,6 @@ const Transcribe = ({ audioURL, onTranscribeComplete }) => {
     })
   }
 
-  const exportToTxt = () => {
-    const element = document.createElement("a");
-    const file = new Blob([output], { type: 'text/plain' });
-    element.href = URL.createObjectURL(file);
-    element.download = "transcription.txt";
-    document.body.appendChild(element); // Required for this to work in FireFox
-    element.click();
-  }
-
   const transcribeButton = useMemo(() => (
     <button
       className="mt-4 w-8 aspect-square text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center justify-center"
@@ -144,7 +135,7 @@ const Transcribe = ({ audioURL, onTranscribeComplete }) => {
   ), [output, downloading, loading, finished, handleFormSubmission]);
 
   return (
-    <div className='flex flex-col items-center justify-center w-full'>
+    <div className='min-h-[390px] flex flex-col items-center justify-center w-full'>
       {transcribeButton}
       {output ? (
         <div className="mt-4 p-4 w-96 h-[300px] overflow-y-scroll shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 

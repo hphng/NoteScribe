@@ -18,8 +18,8 @@ const AudioPlayer = () => {
   const [isMuted, setIsMuted] = useState(false);
 
   const [documentName, setDocumentName] = useState('Untitled Document');
-  const [transcribedText, setTranscribedText] = useState('');
-  const [translatedText, setTranslatedText] = useState('no translation available');
+  const [transcribedText, setTranscribedText] = useState(null);
+  const [translatedText, setTranslatedText] = useState(null);
   const [translateLanguage, setTranslateLanguage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -128,7 +128,7 @@ const AudioPlayer = () => {
         .catch((err) => {
           console.log(err);
         });
-    }catch (err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -209,7 +209,10 @@ const AudioPlayer = () => {
       <div className="mt-4">
         <button
           onClick={openModal}
-          className="px-4 py-2 text-white bg-green-500 hover:bg-green-600 rounded-lg"
+          className={`px-4 py-2 text-white rounded-lg ${!transcribedText || !translatedText
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-green-500 hover:bg-green-600"
+            }`}
           disabled={!transcribedText || !translatedText}
         >
           Save
