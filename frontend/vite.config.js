@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => {
           secure: false,
         },
       },
+      historyApiFallback: true,
     },
     define: {
       __API_URL__: JSON.stringify(apiUrl),
