@@ -109,8 +109,13 @@ const AudioPlayer = () => {
     //apppend form data
     formData.append('documentName', documentName);
     formData.append('transcription', transcribedText);
-    formData.append('translation', translatedText);
-    formData.append('language', translateLanguage);
+    if(!translatedText) {
+      formData.append('translation', 'No translation available');
+      formData.append('language', 'No language selected');
+    } else {
+      formData.append('translation', translatedText);
+      formData.append('language', translateLanguage);
+    }
     //fetch audio file
     const blob = await fetch(audioURL).then(res => res.blob());
     formData.append('audio', blob, 'audio.mp3');
@@ -209,11 +214,11 @@ const AudioPlayer = () => {
       <div className="mt-4">
         <button
           onClick={openModal}
-          className={`px-4 py-2 text-white rounded-lg ${!transcribedText || !translatedText
+          className={`px-4 py-2 text-white rounded-lg ${!transcribedText
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-green-500 hover:bg-green-600"
             }`}
-          disabled={!transcribedText || !translatedText}
+          disabled={!transcribedText}
         >
           Save
         </button>

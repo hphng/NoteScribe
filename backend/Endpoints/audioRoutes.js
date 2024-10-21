@@ -69,6 +69,7 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
     if (!audioFile) {
         return res.status(400).json({ message: 'Audio file is required.' });
     }
+    console.log(translation);
     if (!transcription || !translation || !language) {
         return res.status(400).json({ message: 'Transcription, translation, and language are required.' });
     }
