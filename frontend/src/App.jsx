@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import NavBar from './components/Navbar'
 import Main from './pages/Main'
 import About from './pages/About'
@@ -22,6 +22,7 @@ export default function App() {
             <Route path="/translate" element={<Translate />} />
             <Route path="/a" element={<DocumentList />} />
             <Route path="/a/:id" element={<DocumentDetails />}/>
+            <Route path="*" element={<Navigate to="/"/>}/>
           </Routes>
         </div>
         <Footer />
