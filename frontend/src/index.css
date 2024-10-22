@@ -130,6 +130,14 @@ h6,
   animation-delay: -2s;
 }
 
+.loading3 {
+  animation-delay: 0s;
+}
+
+.loading4 {
+  animation-delay: -1s;
+}
+
 @keyframes width {
   0% { width: 100%; }
   10% { width: 73%; }
