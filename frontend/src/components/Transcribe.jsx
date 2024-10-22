@@ -114,20 +114,22 @@ const Transcribe = ({ audioURL, onTranscribeComplete }) => {
 
   const transcribeButton = useMemo(() => (
     <button
-      className="mt-4 w-8 aspect-square text-white rounded-lg bg-orange-500 hover:bg-orange-600 hover:shadow-md duration-200 flex items-center justify-center"
       onClick={!output && !downloading && !loading ? handleFormSubmission : undefined}
       disabled={finished}
     >
       {
         finished ? (
-          <FontAwesomeIcon icon={faPlay} />
+          <div className="mt-4 w-8 aspect-square text-white rounded-lg bg-orange-500 flex items-center justify-center">
+            <FontAwesomeIcon icon={faPlay} />
+          </div>
         ) : loading || downloading ? (
-          <>
-            <FontAwesomeIcon icon={faCircleNotch} className='animate-spin' />
-          </>
+          <div className="mt-4 w-8 aspect-square text-white rounded-lg bg-orange-500 flex items-center justify-center">
+            <FontAwesomeIcon icon={faCircleNotch} className='animate-spin'/>
+             
+          </div>
         ) : (
           <>
-            <FontAwesomeIcon icon={faPlay} />
+            <FontAwesomeIcon icon={faPlay} className='fa-7x text-orange-500 hover:text-orange-600 hover:scale-125 duration-200'/>
           </>
         )
       }

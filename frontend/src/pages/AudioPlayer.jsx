@@ -109,7 +109,7 @@ const AudioPlayer = () => {
     //apppend form data
     formData.append('documentName', documentName);
     formData.append('transcription', transcribedText);
-    if(!translatedText) {
+    if (!translatedText) {
       formData.append('translation', 'No translation available');
       formData.append('language', 'No language selected');
     } else {
@@ -139,7 +139,7 @@ const AudioPlayer = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
+    <div className="relative min-h-screen flex flex-col items-center justify-center">
       {!transcribedText && (<h1 className="text-6xl font-bold pb-4">Your <span className='bold text-orange-500'>Scribe</span></h1>)}
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} preload="auto">
         <source src={audioURL} type="audio/mp3" />
@@ -211,18 +211,16 @@ const AudioPlayer = () => {
       </div>
 
       {/* Button to trigger modal */}
-      <div className="mt-4">
-        <button
-          onClick={openModal}
-          className={`px-4 py-2 text-white rounded-lg ${!transcribedText
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-green-500 hover:bg-green-600"
-            }`}
-          disabled={!transcribedText}
-        >
-          Save
-        </button>
-      </div>
+      <button
+        onClick={openModal}
+        className={`absolute bottom-10 left-[48%] px-4 py-2 text-white rounded-lg ${!transcribedText
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-green-500 hover:bg-green-600"
+          }`}
+        disabled={!transcribedText}
+      >
+        Save
+      </button>
       <Dialog open={isModalOpen} onClose={closeModal} className="relative z-50">
         <DialogBackdrop className="fixed inset-0 bg-black/30" />
         <div className="fixed inset-0 w-screen p-4">
