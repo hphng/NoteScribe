@@ -129,7 +129,7 @@ const Transcribe = ({ audioURL, onTranscribeComplete }) => {
           </div>
         ) : (
           <>
-            <FontAwesomeIcon icon={faPlay} className='fa-7x text-orange-500 hover:text-orange-600 duration-200' />
+            <FontAwesomeIcon icon={faPlay} className='fa-7x text-orange-500 hover:text-orange-600 hover:scale-125 duration-200'/>
           </>
         )
       }
