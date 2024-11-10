@@ -9,32 +9,11 @@ userRoutes.get('/user', async (req, res) => {
     return res.status(200).json({ message: 'This is user data from the user route.' });
 });
 
-//CREATE NEW USER
+//CREATE NEW USER (SIGN UP)
 userRoutes.post('/user', async (req, res) => {
     console.log("IN POST ROUTE OF /user")
-    const { name, email, password, photo } = req.body;
-    if (!name || !email || !password) {
-        return res.status(400).json({ message: 'Name, email, and password are required.' });
-    }
-
-    try {
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ message: 'Email already exists, please login.' });
-        }
-        const newUser = new User({
-            name,
-            email,
-            password,
-            photo,
-        });
-        await newUser.save();
-        return res.status(200).json(newUser);
-    } catch (error) {
-        console.error('Error creating user:', error.message);
-        return res.status(500).json({ message: 'Internal server error.' });
-    }
-}) 
+    //SAME WITH AUTHROUTES - SIGNUP
+})
 
 //GET USER DATA BY ID
 userRoutes.get('/user/:userId', async (req, res) => {
