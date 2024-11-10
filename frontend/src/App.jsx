@@ -8,6 +8,8 @@ import Footer from './components/Footer'
 import Translate from './components/Translate'
 import DocumentList from './pages/DocumentList'
 import DocumentDetails from './pages/DocumentDetails'
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
 
 export default function App() {
   return (
@@ -22,6 +24,8 @@ export default function App() {
             <Route path="/translate" element={<Translate />} />
             <Route path="/a" element={<DocumentList />} />
             <Route path="/a/:id" element={<DocumentDetails />}/>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/signup" element={<SignUp />}/>
             <Route path="*" element={<Navigate to="/"/>}/>
           </Routes>
         </div>
