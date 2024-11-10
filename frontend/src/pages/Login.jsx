@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Toggle password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShow) => !prevShow);
   };
 
   const handleLoginSubmit = (e) => {
@@ -35,7 +41,7 @@ const LoginPage = () => {
           <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 focus-within:border-orange-500">
             <FontAwesomeIcon icon={faLock} className="text-gray-500" />
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               name="password"
               placeholder="Password"
               value={formData.password}
@@ -43,6 +49,13 @@ const LoginPage = () => {
               className="flex-1 ml-3 outline-none focus:outline-none"
               required
             />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="ml-2 text-gray-500"
+            >
+              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+            </button>
           </div>
 
           <button
