@@ -41,7 +41,7 @@ authRoutes.post('/auth/singup', async (req, res) => {
 })
 
 //LOGIN (GET USER DATA BY EMAIL AND PASSWORD)
-authRoutes.post('/login', async (req, res) => {
+authRoutes.post('/auth/login', async (req, res) => {
     console.log("IN POST ROUTE OF /auth/login")
     const { email, password } = req.body;
     if (!email || !password) {

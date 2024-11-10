@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 
 import audioRoutes from './Endpoints/audioRoutes.js';
 import userRoutes from './Endpoints/userRoutes.js';
+import authRoutes from './Endpoints/AuthRoute.js';
 
 dotenv.config({path: '../.env'}); // Load environment variables from a .env file into process.env
 
@@ -42,10 +43,11 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const router = express.Router();
+app.use('/api', router);
+
 router.use('/', audioRoutes);
 router.use('/', userRoutes);
-
-app.use('/api', router);
+router.use('/', authRoutes);
 
 app.get('/api/data', (req, res) => {
     const sampleData = {
