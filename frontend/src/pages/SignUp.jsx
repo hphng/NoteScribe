@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Field, Fieldset, Input, Label, Legend, Select } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faLock, faImage, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -42,12 +43,21 @@ const SignupPage = () => {
   };
 
   // Handle form submission
-  const handleSignupSubmit = (e) => {
+  const handleSignupSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      console.log('Form data submitted:', formData);
-      // Insert signup logic here
+    if (!validateForm()) {
+      return;
     }
+    try {
+      console.log('Form data submitted:', formData);
+      const response = await axios.post('http://localhost:5000/api/auth/signup', formData);
+      console.log('Signup response:', response.data);
+      localStorage.setItem('token', response.data.token);
+    } catch (error) {
+      console.error('Error signing up:', error.message);
+    }
+    // Redirect to home page after successful signup
+    window.location.href = '/';
   };
 
   // Handle input change
