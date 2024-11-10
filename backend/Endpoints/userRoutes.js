@@ -1,11 +1,12 @@
 import express from 'express';
 import User from '../Database Schema/User.js';
 import mongoose from 'mongoose';
+import { authMiddleware } from '../Utils/jwt.js';
 
 const userRoutes = express.Router();
 
 // GET ALL USERS
-userRoutes.get('/user', async (req, res) => {
+userRoutes.get('/user', authMiddleware, async (req, res) => {
     return res.status(200).json({ message: 'This is user data from the user route.' });
 });
 

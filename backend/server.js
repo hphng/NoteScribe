@@ -8,7 +8,7 @@ import audioRoutes from './Endpoints/audioRoutes.js';
 import userRoutes from './Endpoints/userRoutes.js';
 import authRoutes from './Endpoints/AuthRoute.js';
 
-dotenv.config({path: '../.env'}); // Load environment variables from a .env file into process.env
+dotenv.config({ path: '../.env' }); // Load environment variables from a .env file into process.env
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,26 +21,33 @@ if (!mongoURI) {
 
 const connectToMongoDB = async () => {
     return new Promise((resolve, reject) => {
-      mongoose.connect(mongoURI, { 
-        serverSelectionTimeoutMS: 5000 // 5 seconds timeout
-      })
-      .then(() => {
-        console.log('MongoDB connected');
-        resolve();
-      })
-      .catch((err) => {
-        console.error('Error connecting to MongoDB:', err.message);
-        reject(err);
-      });
+        mongoose.connect(mongoURI, {
+            serverSelectionTimeoutMS: 5000 // 5 seconds timeout
+        })
+            .then(() => {
+                console.log('MongoDB connected');
+                resolve();
+            })
+            .catch((err) => {
+                console.error('Error connecting to MongoDB:', err.message);
+                reject(err);
+            });
     });
-  };
+};
 
 connectToMongoDB();
-  
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+
+app.use((req, res, next) => {
+    req.requestTime = new Date().toISOString();
+    // console.log(req.headers);
+    console.log(`Request made to: ${req.originalUrl} at ${req.requestTime}`);
+    next();
+})
 
 const router = express.Router();
 app.use('/api', router);

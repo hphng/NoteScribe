@@ -1,6 +1,5 @@
 import express from 'express';
 import User from '../Database Schema/User.js';
-import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
@@ -12,7 +11,7 @@ const JWT_EXPIRES_TIME = process.env.JWT_EXPIRES_TIME;
 const authRoutes = express.Router();
 
 //SIGN UP (CREATE NEW USER)
-authRoutes.post('/auth/singup', async (req, res) => {
+authRoutes.post('/auth/signup', async (req, res) => {
     console.log("IN POST ROUTE OF /auth/signup")
     const { name, email, password, photo } = req.body;
     if (!name || !email || !password) {
