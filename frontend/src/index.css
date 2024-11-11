@@ -8,6 +8,11 @@
   scrollbar-gutter: stable 0;
 }
 
+html {
+  overflow-y: auto !important;
+  padding: 0 !important;
+}
+
 h1,
 h2,
 h3,

@@ -44,10 +44,10 @@ const NavBar = () => {
               <li className=''>
                 <Menu as="div" className="relative">
                   <MenuButton className="flex items-center">
-                    <img src={defaultImage || user.photo} alt="user" className="w-8 aspect-square rounded-full" />
+                    <img src={defaultImage || user.photo} alt="user" className="w-8 aspect-square rounded-full"/>
                   </MenuButton>
                   <MenuItems 
-                    className="fixed right-0 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg 
+                    className="fixed right-10 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg 
                               ring-1 ring-black ring-opacity-5 focus:outline-none ">
                     <MenuItem>
                       <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="/profile"> {user.name.substring(0, 8)} </a>
