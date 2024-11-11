@@ -7,7 +7,10 @@ const userRoutes = express.Router();
 
 // GET ALL USERS
 userRoutes.get('/user', authMiddleware, async (req, res) => {
-    return res.status(200).json({ message: 'This is user data from the user route.' });
+    return res.status(200).json({ 
+        message: 'This is user data from the user route.' , 
+        user: req.user
+    });
 });
 
 //CREATE NEW USER (SIGN UP)

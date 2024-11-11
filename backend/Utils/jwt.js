@@ -56,5 +56,7 @@ export const authMiddleware = async (req, res, next) => {
     if(user.changePasswordAfter(decoded.iat)){
         return res.status(401).json({ message: 'User recently changed password! Please log in again.' });
     }
+
+    req.user = user;
     next();
 }
