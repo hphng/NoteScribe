@@ -17,6 +17,11 @@ const audioSchema = new mongoose.Schema({
     s3AudioUrl: {
         type: String,
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    }
 });
 
 const Audio = mongoose.model('Audio', audioSchema);

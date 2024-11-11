@@ -64,7 +64,7 @@ audioRoutes.get('/audio/:audioId', async (req, res) => {
 //POST AUDIO DATA
 audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
     console.log("IN POST ROUTE OF /audio")
-    const { documentName, transcription, translation, language } = req.body;
+    const { documentName, transcription, translation, language, userId } = req.body;
     const audioFile = req.file;
     if (!audioFile) {
         return res.status(400).json({ message: 'Audio file is required.' });
@@ -72,6 +72,9 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
     console.log(translation);
     if (!transcription || !translation || !language) {
         return res.status(400).json({ message: 'Transcription, translation, and language are required.' });
+    }
+    if(!userId){
+        return res.status(400).json({ message: 'User ID is required.' });
     }
     try {
         //Create a unique key for the audio file of S3
@@ -91,6 +94,7 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
             translation,
             language,
             s3AudioUrl,
+            userId: userId,
         };
         console.log('Audio data:', newAudioData);
         const newAudio = await new Audio(newAudioData).save();
