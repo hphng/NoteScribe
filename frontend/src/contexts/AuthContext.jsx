@@ -21,7 +21,13 @@ export const AuthProvider = ({ children }) => {
                 console.log("IN AUTHCONTEXT", data);
                 setUser(data.user);
             } catch (error) {
-                console.error('Error fetching user data:', error);
+                if (error.response && error.response.status === 401) {
+                    console.warn('Unauthorized access - setting user to null');
+                    setUser(null);
+                    localStorage.removeItem('token');
+                } else {
+                    console.error('Error fetching user data:', error);
+                }
                 // setToken(null);
                 // localStorage.removeItem('token');
                 //   localStorage.removeItem('user');

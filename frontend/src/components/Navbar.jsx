@@ -21,6 +21,8 @@ const NavBar = () => {
   if (loading) return;
   const logout = () => {
     console.log("LOGOUT");
+    localStorage.removeItem('token');
+    window.location.href = '/login';
   }
 
   const displayName = () => {
@@ -41,9 +43,9 @@ const NavBar = () => {
           <li><Link to="/a" className="hover:text-orange-500">My Audio</Link></li>
           {!loading && (
             user ? (
-              <li className=''>
+              <li className='mr-4'>
                 <Menu as="div" className="relative">
-                  <MenuButton className="flex items-center mr-4 transition data-[hover]:scale-110 data-[hover]:ease-in">
+                  <MenuButton className="flex items-center transition data-[hover]:scale-110 data-[hover]:ease-in">
                     <img src={user.photo || defaultImage} alt="user" className="w-8 aspect-square rounded-full transition ease-in-out duration-200 hover:border-2 hover:border-orange-500 " />
                   </MenuButton>
                   <MenuItems
@@ -54,7 +56,7 @@ const NavBar = () => {
                               border-2 border-black shadow-md shadow-orange-500
                               transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0">
                     <MenuItem disabled>
-                      <a className="block px-4 py-2 text-sm cursor-default" href="/invite-a-friend">
+                      <a className="block px-4 py-2 text-sm cursor-default" href="/">
                         {user.name.substring(0, 8)}
                       </a>
                     </MenuItem>
@@ -70,8 +72,7 @@ const NavBar = () => {
               </li>
             ) : (
               <>
-                <li><Link to="/login" className="hover:text-orange-500">Login</Link></li>
-                <li><Link to="/signup" className="hover:text-orange-500">Sign Up</Link></li>
+                <li><Link to="/login" className="hover:text-orange-500 mr-4">Login</Link></li>
               </>
             )
           )}
