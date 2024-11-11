@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { Description, Field, Fieldset, Input, Label, Legend, Select, Textarea } from '@headlessui/react'
+import defaultImage from '../assets/default_avatar.jpg'
 
 const Profile = () => {
     const { user } = useContext(AuthContext);
-    const defaultImage = "https://via.placeholder.com/150";
 
     const handleSave = () => {
         console.log('Saving user information...');

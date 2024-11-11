@@ -2,12 +2,11 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext';
 import { Menu, MenuButton, MenuItem, MenuItems, MenuSeparator } from '@headlessui/react'
+import defaultImage from '../assets/default_avatar.jpg'
 
 const NavBar = () => {
   const [scroll, setScroll] = useState(false)
   const { user, loading } = useContext(AuthContext);
-
-  const defaultImage = "https://via.placeholder.com/150"
 
   useEffect(() => {
     const handleScroll = () => {
