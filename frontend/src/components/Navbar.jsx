@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext';
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems, MenuSeparator } from '@headlessui/react'
 
 const NavBar = () => {
   const [scroll, setScroll] = useState(false)
@@ -25,7 +25,7 @@ const NavBar = () => {
 
   const displayName = () => {
     console.log(user.name.substring(0, 8));
-    return user.name.substring(0, 8); 
+    return user.name.substring(0, 8);
   }
 
   return (
@@ -35,7 +35,7 @@ const NavBar = () => {
         <h2 className="text-2xl font-bold">
           <Link to="/" className="">Note<span className="text-orange-500">Scribe</span></Link>
         </h2>
-        <ul className="flex gap-4">
+        <ul className="flex gap-4 items-center">
           <li><Link to="/" className="hover:text-orange-500">Home</Link></li>
           <li><Link to="/about" className="hover:text-orange-500">About</Link></li>
           <li><Link to="/a" className="hover:text-orange-500">My Audio</Link></li>
@@ -43,17 +43,27 @@ const NavBar = () => {
             user ? (
               <li className=''>
                 <Menu as="div" className="relative">
-                  <MenuButton className="flex items-center">
-                    <img src={defaultImage || user.photo} alt="user" className="w-8 aspect-square rounded-full"/>
+                  <MenuButton className="flex items-center mr-4 transition data-[hover]:scale-110 data-[hover]:ease-in">
+                    <img src={user.photo || defaultImage} alt="user" className="w-8 aspect-square rounded-full transition ease-in-out duration-200 hover:border-2 hover:border-orange-500 " />
                   </MenuButton>
-                  <MenuItems 
-                    className="fixed right-10 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg 
-                              ring-1 ring-black ring-opacity-5 focus:outline-none ">
+                  <MenuItems
+                    transition
+                    anchor="bottom"
+                    className="fixed z-50 right-0 mt-2 origin-top-right bg-orange-100 rounded-md text-center
+                              ring-1 ring-black ring-opacity-5 focus:outline-none w-44 
+                              border-2 border-black shadow-md shadow-orange-500
+                              transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0">
+                    <MenuItem disabled>
+                      <a className="block px-4 py-2 text-sm cursor-default" href="/invite-a-friend">
+                        {user.name.substring(0, 8)}
+                      </a>
+                    </MenuItem>
+                    <MenuSeparator className="h-[2px] bg-black" />
                     <MenuItem>
-                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" href="/profile"> {user.name.substring(0, 8)} </a>
+                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-200/70" href="/profile"> Profile </a>
                     </MenuItem>
                     <MenuItem>
-                      <button onClick={logout} className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</button>
+                      <button onClick={logout} className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-orange-200/70">Logout</button>
                     </MenuItem>
                   </MenuItems>
                 </Menu>
