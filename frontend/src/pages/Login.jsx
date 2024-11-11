@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 const LoginPage = () => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = (e) => {
@@ -15,10 +16,19 @@ const LoginPage = () => {
     setShowPassword((prevShow) => !prevShow);
   };
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
     console.log('Logging in...');
     // Add login logic here
+    try{
+      console.log('Form data submitted:', formData);
+      const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+      console.log('Login response:', response.data);
+      localStorage.setItem('token', response.data.token);
+      window.location.href = '/';
+    }catch(error){
+      console.error('Error logging in:', error.message);
+    }
   };
 
   return (
@@ -29,10 +39,10 @@ const LoginPage = () => {
           <div className="flex items-center border border-gray-300 rounded-md px-3 py-2 focus-within:border-orange-500">
             <FontAwesomeIcon icon={faUser} className="text-gray-500" />
             <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={formData.email}
               onChange={handleInputChange}
               className="flex-1 ml-3 outline-none focus:outline-none"
               required
