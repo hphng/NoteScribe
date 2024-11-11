@@ -40,7 +40,10 @@ const NavBar = () => {
         <ul className="flex gap-4 items-center">
           <li><Link to="/" className="hover:text-orange-500">Home</Link></li>
           <li><Link to="/about" className="hover:text-orange-500">About</Link></li>
-          <li><Link to="/a" className="hover:text-orange-500">My Audio</Link></li>
+          {
+            user ? 
+            <li><Link to="/a" className="hover:text-orange-500">My Audio</Link></li> : null
+          }
           {!loading && (
             user ? (
               <li className='mr-4'>
