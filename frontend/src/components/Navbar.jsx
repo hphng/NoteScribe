@@ -59,7 +59,8 @@ const NavBar = () => {
                               transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0">
                     <MenuItem disabled>
                       <a className="block px-4 py-2 text-sm cursor-default" href="/">
-                        {user.name.substring(0, 8)}
+                        {user.name.substring(0, 16)}
+                        {user.name.length > 16 ? '...' : ''}
                       </a>
                     </MenuItem>
                     <MenuSeparator className="h-[2px] bg-black" />
