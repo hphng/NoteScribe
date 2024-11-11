@@ -10,6 +10,7 @@ import DocumentList from './pages/DocumentList'
 import DocumentDetails from './pages/DocumentDetails'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
+import Profile from './pages/Profile'
 
 export default function App() {
   return (
@@ -27,6 +28,7 @@ export default function App() {
             <Route path="/login" element={<Login />}/>
             <Route path="/signup" element={<SignUp />}/>
             <Route path="*" element={<Navigate to="/"/>}/>
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
         <Footer />
