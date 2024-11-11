@@ -33,7 +33,7 @@ export const authMiddleware = async (req, res, next) => {
     let decoded;
     try {
         decoded = await promisify(jwt.verify)(token, JWT_SECRET)
-        console.log(decoded);
+        // console.log(decoded);
     }catch (error) {
         if (error instanceof jwt.TokenExpiredError) {
             return res.status(401).json({ message: 'Token has expired, please log in again.' });
@@ -50,7 +50,7 @@ export const authMiddleware = async (req, res, next) => {
     if (!user) {
         return res.status(401).json({ message: 'The user belonging to this token does no longer exist' });
     }
-    console.log(user);
+    // console.log(user);
 
     //    4) Check if user changed password after the token was issued
     if(user.changePasswordAfter(decoded.iat)){

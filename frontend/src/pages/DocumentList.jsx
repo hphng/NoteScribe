@@ -15,8 +15,12 @@ const DocumentList = () => {
     // Fetch audio data with only ID and document name
     const getAudioData = async () => {
       try {
-        console.log(baseURL)
-        const response = await axios.get(`${baseURL}/api/audio/metadata`);
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${baseURL}/api/audio/u/metadata`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = response.data;
         setDocuments(data);
       } catch (error) {

@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 import audioRoutes from './Endpoints/audioRoutes.js';
 import userRoutes from './Endpoints/userRoutes.js';
-import authRoutes from './Endpoints/AuthRoute.js';
+import authRoutes from './Endpoints/authRoutes.js';
 
 dotenv.config({ path: '../.env' }); // Load environment variables from a .env file into process.env
 
