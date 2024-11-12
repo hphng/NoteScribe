@@ -122,6 +122,8 @@ const DocumentDetails = () => {
         translation,
       });
       console.log('Save changes:', response.data);
+      document.transcription = transcription;
+      document.translation = translation;
       alert('Changes saved successfully.');
     } catch (error) {
       console.error('Error saving changes:', error.message);
