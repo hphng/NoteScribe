@@ -122,6 +122,7 @@ const DocumentDetails = () => {
         translation,
       });
       console.log('Save changes:', response.data);
+      alert('Changes saved successfully.');
     } catch (error) {
       console.error('Error saving changes:', error.message);
     }
