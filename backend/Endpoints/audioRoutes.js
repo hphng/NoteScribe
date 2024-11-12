@@ -43,7 +43,7 @@ audioRoutes.get('/audio/metadata', async (req, res) => {
 audioRoutes.get('/audio/u/metadata', authMiddleware, async (req, res) => {
     console.log("IN GET ROUTE OF /audio/u/metadata")
     const userId = req.user.id;
-    if(!userId){
+    if (!userId) {
         return res.status(400).json({ message: 'User ID is required.' });
     }
     try {
@@ -93,7 +93,7 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
     if (!transcription || !translation || !language) {
         return res.status(400).json({ message: 'Transcription, translation, and language are required.' });
     }
-    if(!userId){
+    if (!userId) {
         return res.status(400).json({ message: 'User ID is required.' });
     }
     try {
@@ -130,8 +130,30 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
 
 //PUT AUDIO DATA
 audioRoutes.put('/audio/:id', async (req, res) => {
+    console.log("IN PUT ROUTE OF /audio/:id")
     const { id } = req.params;
-    return res.status(200).json({ message: `Audio data has been updated with id: ${id}` });
+    if (!id) {
+        return res.status(400).json({ message: 'Audio ID is required.' });
+    }
+    const updateFields = {};
+    for (const key in req.body) {
+        if (req.body[key] !== null && req.body[key] !== undefined) {
+            updateFields[key] = req.body[key];
+        }
+    }
+    if (Object.keys(updateFields).length === 0) {
+        return res.status(400).json({ message: 'No valid fields provided for update.' });
+    }
+    try {
+        const audio = await Audio.findOneAndUpdate({ _id: id }, updateFields, { new: true });
+        if (!audio) {
+            return res.status(404).json({ message: `Cannot find audio in db with Id: ${id}` });
+        }
+        return res.status(200).json({ message: `Audio data has been updated with Id: ${id}` , audio });
+    } catch (error) {
+        console.error('Error updating audio data:', error.message);
+        return res.status(500).json({ message: 'Internal server error.' });
+    }
 })
 
 //DELETE AUDIO DATA
@@ -149,8 +171,8 @@ audioRoutes.delete('/audio/:audioId', async (req, res) => {
         const s3AudioUrl = audio.s3AudioUrl;
         const s3Key = s3AudioUrl.split('.com/')[1];
         const s3Params = {
-            Bucket: process.env.S3_BUCKET_NAME, 
-            Key: s3Key, 
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: s3Key,
         };
         // Delete the file from S3
         await s3Client.send(new DeleteObjectCommand(s3Params));
