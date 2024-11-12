@@ -3,6 +3,7 @@ import multer from 'multer';
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import Audio from '../Database Schema/Audio.js';
 import dotenv from 'dotenv';
+import { authMiddleware } from '../Utils/jwt.js';
 
 dotenv.config({ path: '../.env' });
 
@@ -28,6 +29,25 @@ audioRoutes.get('/audio/metadata', async (req, res) => {
     console.log("IN GET ROUTE OF /audio/metadata")
     try {
         const audioMetadata = await Audio.find({}, { _id: 1, documentName: 1 });
+        if (!audioMetadata) {
+            return res.status(404).json({ message: 'Audio metadata not found.' });
+        }
+        return res.status(200).json(audioMetadata);
+    } catch (error) {
+        console.error('Error fetching audio metadata:', error.message);
+        return res.status(500).json({ message: 'Internal server error.' });
+    }
+})
+
+//GET AUDIO DATA AND DOCUMENT NAME BY USER ID
+audioRoutes.get('/audio/u/metadata', authMiddleware, async (req, res) => {
+    console.log("IN GET ROUTE OF /audio/u/metadata")
+    const userId = req.user.id;
+    if(!userId){
+        return res.status(400).json({ message: 'User ID is required.' });
+    }
+    try {
+        const audioMetadata = await Audio.find({ userId }, { _id: 1, documentName: 1 });
         if (!audioMetadata) {
             return res.status(404).json({ message: 'Audio metadata not found.' });
         }
@@ -64,7 +84,7 @@ audioRoutes.get('/audio/:audioId', async (req, res) => {
 //POST AUDIO DATA
 audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
     console.log("IN POST ROUTE OF /audio")
-    const { documentName, transcription, translation, language } = req.body;
+    const { documentName, transcription, translation, language, userId } = req.body;
     const audioFile = req.file;
     if (!audioFile) {
         return res.status(400).json({ message: 'Audio file is required.' });
@@ -72,6 +92,9 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
     console.log(translation);
     if (!transcription || !translation || !language) {
         return res.status(400).json({ message: 'Transcription, translation, and language are required.' });
+    }
+    if(!userId){
+        return res.status(400).json({ message: 'User ID is required.' });
     }
     try {
         //Create a unique key for the audio file of S3
@@ -91,6 +114,7 @@ audioRoutes.post('/audio', upload.single('audio'), async (req, res) => {
             translation,
             language,
             s3AudioUrl,
+            userId: userId,
         };
         console.log('Audio data:', newAudioData);
         const newAudio = await new Audio(newAudioData).save();

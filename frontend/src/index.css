@@ -5,6 +5,12 @@
 
 * {
   font-family: 'Open Sans', sans-serif;
+  scrollbar-gutter: stable 0;
+}
+
+html {
+  overflow-y: auto !important;
+  padding: 0 !important;
 }
 
 h1,

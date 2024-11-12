@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause, faVolumeHigh, faVolumeXmark, faDownload, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -10,6 +10,7 @@ import {
   Field, Input, Label
 } from '@headlessui/react'
 import axios from "axios";
+import { AuthContext } from '../contexts/AuthContext';
 
 const AudioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -22,6 +23,8 @@ const AudioPlayer = () => {
   const [translatedText, setTranslatedText] = useState(null);
   const [translateLanguage, setTranslateLanguage] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { user } = useContext(AuthContext);
 
   const audioRef = useRef(null);
   const progressBarRef = useRef(null);
@@ -102,6 +105,11 @@ const AudioPlayer = () => {
     setIsModalOpen(false);
   }
 
+  const needLogin = () => {
+    alert('Please login to save your document');
+    // navigate('/login');
+  }
+
   const saveDocument = async () => {
     //save document to database
     console.log('Document saved');
@@ -116,6 +124,7 @@ const AudioPlayer = () => {
       formData.append('translation', translatedText);
       formData.append('language', translateLanguage);
     }
+    formData.append('userId', user._id);
     //fetch audio file
     const blob = await fetch(audioURL).then(res => res.blob());
     formData.append('audio', blob, 'audio.mp3');
@@ -249,7 +258,7 @@ const AudioPlayer = () => {
               <p>{translatedText ? translatedText : "no translation available"}</p>
               <div className="flex gap-4 pt-6">
                 <button onClick={closeModal} className="px-4 py-2 text-white bg-orange-500 hover:bg-orange-600 rounded-lg">Cancel</button>
-                <button onClick={saveDocument} className="px-4 py-2 text-white bg-orange-500 hover:bg-orange-600 rounded-lg">Save</button>
+                <button onClick={user? saveDocument : needLogin} className="px-4 py-2 text-white bg-orange-500 hover:bg-orange-600 rounded-lg">Save</button>
               </div>
             </DialogPanel>
           </div>
