@@ -50,7 +50,7 @@ const SignupPage = () => {
     }
     try {
       console.log('Form data submitted:', formData);
-      const response = await axios.post('http://localhost:5000/api/auth/signup', formData);
+      const response = await axios.post('http://localhost:3000/api/auth/signup', formData);
       console.log('Signup response:', response.data);
       localStorage.setItem('token', response.data.token);
     } catch (error) {
