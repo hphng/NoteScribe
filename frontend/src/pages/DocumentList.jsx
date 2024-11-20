@@ -8,28 +8,23 @@ const DocumentList = () => {
   const [documents, setDocuments] = useState([]);
   const navigate = useNavigate();
 
-  // const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-  const baseURL = 'http://localhost:3000';
 
   useEffect(() => {
     // Fetch audio data with only ID and document name
     const getAudioData = async () => {
       try {
         const token = localStorage.getItem('token');
-        console.log('Token:', token);
-        const response = await axios.get(`${baseURL}/api/audio/u/metadata`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/audio/u/metadata`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("ENDDDDD");
         const data = response.data;
         setDocuments(data);
       } catch (error) {
         console.error('Error fetching documents:', error.message);
       }
     };
-    console.log("STARTTTTT");
     getAudioData();
   }, []);
 
