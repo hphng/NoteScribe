@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
         const fetchUserData = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get( 'http://localhost:3000/api/user' , {
+                const response = await axios.get( `${import.meta.env.VITE_API_URL}/api/user` , {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
