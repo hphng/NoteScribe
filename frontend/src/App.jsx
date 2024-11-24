@@ -19,16 +19,16 @@ export default function App() {
         <NavBar />
         <div className="flex-grow">
           <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/transcribe" element={<AudioPlayer />} />
-            <Route path="/translate" element={<Translate />} />
-            <Route path="/a" element={<DocumentList />} />
+            <Route path="/" exact element={<Main />} />
+            <Route path="/a" exact element={<DocumentList />} />
+            <Route path="/about" exact element={<About />} />
+            <Route path="/transcribe" exact element={<AudioPlayer />} />
+            <Route path="/translate" exact element={<Translate />} />
             <Route path="/a/:id" element={<DocumentDetails />}/>
-            <Route path="/login" element={<Login />}/>
-            <Route path="/signup" element={<SignUp />}/>
+            <Route path="/login" exact element={<Login />}/>
+            <Route path="/signup" exact element={<SignUp />}/>
+            <Route path="/profile" exact element={<Profile />} />
             <Route path="*" element={<Navigate to="/"/>}/>
-            <Route path="/profile" element={<Profile />} />
           </Routes>
         </div>
         <Footer />
