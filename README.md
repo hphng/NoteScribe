@@ -6,6 +6,18 @@ A web-tool using AI to transcribe and translate from audio/speech to text.
 
 **Link to project:** [NoteScribe](https://notetranscribe.vercel.app/)
 
+## Table of Contents
+- [About me](#-about-me)
+- [Highlights](#-highlights)
+- [Built With](#-built-with)
+- [Getting Started](#-getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+    - [Usage](#usage)
+- [Future Enhancement Roadmap](#-future-enhancement-roadmap)
+- [Feedback and Contributions](#-contributing)
+- [License](#-license)
+- [Contacs](#%EF%B8%8F-contacts)
 
 ## 🚀 About me
 Hi, I'm Huy Phung – the sole developer behind NoteScribe, a project inspired by my passion for coding and simplifying everyday tasks through technology.
@@ -21,7 +33,7 @@ Whether you're recording a lecture, a meeting, or your personal thoughts, NoteSc
 - **Export Transcriptions:** Save transcribed text as documents or copy them for future use.
 - **Audio Playback with Text Syncing:** Review audio and synced text side by side for seamless editing and note-taking.
 
-## 👷 Built With:
+## 🔨 Built With:
 
 * [![React][React.js]][React-url]
 * [![Tailwind CSS][TailwindCSS]][TailwindCSS-url]
@@ -69,7 +81,7 @@ Make sure you have the following installed on your local machine:
 2. Upload an audio file or record a new one to start transcribing.
 
 
-## Future Enhancement Roadmap:
+## 🔑 Future Enhancement Roadmap:
 - [ ] Dark mode/ System mode
 - [ ] User Authentication and Authorization
     - [x] JWT
@@ -112,7 +124,7 @@ Don't forget to give the project a star! Thanks again!
 Distributed under the MIT License.
 
 <!-- CONTACT -->
-## 🗨️ Contact
+## 🗨️ Contacts
 
 Huy Phung - huyphung3103@gmail.com
 
