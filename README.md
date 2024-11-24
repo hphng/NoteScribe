@@ -22,7 +22,7 @@ A web-tool using AI to transcribe and translate from audio/speech to text.
 ## 🚀 About me
 Hi, I'm Huy Phung – the sole developer behind NoteScribe, a project inspired by my passion for coding and simplifying everyday tasks through technology.
 
-NoteScribe was created to address the need for a simple, accessible, and feature-rich tool to manage voice notes. From students and professionals to anyone needing efficient note management, this app aims to streamline the process of capturing and organizing audio recordings.
+Inspired by [Hugging Face](https://huggingface.co/), NoteScribe was created to address the need for a simple, accessible, and feature-rich tool to manage voice notes. From students and professionals to anyone needing efficient note management, this app aims to streamline the process of capturing and organizing audio recordings.
 
 Whether you're recording a lecture, a meeting, or your personal thoughts, NoteScribe provides an all-in-one platform to transcribe, translate, and manage your notes with ease.
 
