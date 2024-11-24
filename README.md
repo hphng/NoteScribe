@@ -4,24 +4,24 @@
 ![notescribe](frontend/src/assets/introduction.png)
 A web-tool using AI to transcribe and translate from audio/speech to text.
 
-**Link to project:** [notescribe](https://notetranscribe.vercel.app/)
+**Link to project:** [NoteScribe](https://notetranscribe.vercel.app/)
 
 
-## About me
+## 🚀 About me
 Hi, I'm Huy Phung – the sole developer behind NoteScribe, a project inspired by my passion for coding and simplifying everyday tasks through technology.
 
 NoteScribe was created to address the need for a simple, accessible, and feature-rich tool to manage voice notes. From students and professionals to anyone needing efficient note management, this app aims to streamline the process of capturing and organizing audio recordings.
 
 Whether you're recording a lecture, a meeting, or your personal thoughts, NoteScribe provides an all-in-one platform to transcribe, translate, and manage your notes with ease.
 
-## Highlights:
+## 🌟 Highlights:
 - **Audio Transcription:** Automatically transcribe recorded or uploaded audio files into text with high accuracy
 - **Multiple Language Support:** Transcribe audio in various languages and translate transcriptions into over 50 languages.
 - **File Upload for Transcription:** Upload pre-recorded audio files for quick and accurate text conversion.
 - **Export Transcriptions:** Save transcribed text as documents or copy them for future use.
 - **Audio Playback with Text Syncing:** Review audio and synced text side by side for seamless editing and note-taking.
 
-## Built With:
+## 👷 Built With:
 
 * [![React][React.js]][React-url]
 * [![Tailwind CSS][TailwindCSS]][TailwindCSS-url]
@@ -34,9 +34,8 @@ Whether you're recording a lecture, a meeting, or your personal thoughts, NoteSc
 * [![AWS S3][AWS-S3]][AWS-S3-url]
 * [![JWT][JWT]][JWT-url]
 * [![Vercel][Vercel]][Vercel-url]
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Getting Started 
+## 📝 Getting Started 
 To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
@@ -69,16 +68,15 @@ Make sure you have the following installed on your local machine:
 1. Open your browser and navigate to `http://localhost:5173`
 2. Upload an audio file or record a new one to start transcribing.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Future Enhancement Roadmap:\
+## Future Enhancement Roadmap:
 - [ ] Dark mode/ System mode
 - [ ] User Authentication and Authorization
     - [x] JWT
     - [x] Role-Based Access Control (RBAC)
     - [ ] OAuth 2.0
     - [ ] Multi-Factor Authentication (MFA)
-- [x] Reponsiveness with mobile view
+- [x] Responsiveness with mobile view
 - [x] Integration with Cloud Storage Services
 - [ ] Enhanced Security Features
     - [ ] Data Encryption at Rest and in Transit
@@ -86,15 +84,39 @@ Make sure you have the following installed on your local machine:
     - [ ] Secure API Endpoints with Rate Limiting
     - [ ] Implement Content Security Policy (CSP)
 - [ ] Customizable Transcription Settings
-    - [ ] Transcription Accuracy Levels: Choose between different accuracy levels based on your needs.
-    - [ ] Timestamp Insertion: Automatically insert timestamps at specified intervals in the transcribed text.
+    - [ ] Transcription Accuracy Levels
+    - [ ] Timestamp Insertion
 - [ ] Advanced Analytics and Reporting (Admin Dashboard)
-    - [ ] Usage Statistics: Track the number of transcriptions, translations, and other key metrics.
-    - [ ] User Behavior Analysis: Gain insights into how users interact with the app.
-    - [ ]Performance Reports: Monitor the performance of transcription and translation services.
-    - [ ] Custom Reports: Generate custom reports based on specific criteria and timeframes.
+    - [ ] Usage Statistics
+    - [ ] User Behavior Analysis
+    - [ ] Performance Reports
+    - [ ] Custom Reports
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## 🤝 Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<!-- LICENSE -->
+## 📃 License
+
+Distributed under the MIT License.
+
+<!-- CONTACT -->
+## 🗨️ Contact
+
+Huy Phung - huyphung3103@gmail.com
+
+Project Link: [https://github.com/hphng/NoteScribe](https://github.com/hphng/NoteScribe)
 
 [Vite]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
 [Vite-url]: https://vitejs.dev/
