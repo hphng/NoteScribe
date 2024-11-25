@@ -2,6 +2,7 @@ import express from 'express';
 import User from '../Database Schema/User.js';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import passport from 'passport';
 
 dotenv.config({ path: '../.env' });
 
@@ -12,14 +13,14 @@ const authRoutes = express.Router();
 
 //SIGN UP (CREATE NEW USER)
 authRoutes.post('/auth/signup', async (req, res) => {
-    console.log("IN POST ROUTE OF /auth/signup")
+    console.log("IN POST ROUTE OF /auth/signup (local signup)")
     const { name, email, password, photo } = req.body;
     if (!name || !email || !password) {
         return res.status(400).json({ message: 'Name, email, and password are required.' });
     }
 
     try {
-        const existingUser = await User.findOne({ email });
+        const existingUser = await User.findOne({ email, provider: 'local' });
         if (existingUser) {
             return res.status(400).json({ message: 'Email already exists, please login.' });
         }
@@ -48,7 +49,7 @@ authRoutes.post('/auth/login', async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({ email }).select('+password');
+        const user = await User.findOne({ email, provider: 'local' }).select('+password');
         if (!user) {
             return res.status(401).json({ message: 'User data not found.' });
         }
@@ -64,5 +65,21 @@ authRoutes.post('/auth/login', async (req, res) => {
         return res.status(500).json({ message: 'Internal server error.' });
     }
 })
+
+authRoutes.get('/auth/google', passport.authenticate('google', {
+    scope: ['profile', 'email']
+})) 
+
+authRoutes.get('/auth/google/callback', 
+    passport.authenticate('google', { session: false, failureRedirect: '/login' }),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        const { token, user } = req.user;
+        console.log("Successfully authenticated with Google.")
+        console.log(user);
+        res.status(200).json({token, user});
+        // res.redirect('/');
+    }
+)
 
 export default authRoutes;

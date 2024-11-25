@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import path from 'path';
+import passport from './Utils/passportConfig.js';
 
 import audioRoutes from './Endpoints/audioRoutes.js';
 import userRoutes from './Endpoints/userRoutes.js';
@@ -47,6 +48,7 @@ connectToMongoDB();
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
+app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
@@ -70,8 +72,8 @@ app.use('/*', (req, res) => {
 
 
 // Start the server
-// app.listen(PORT, () => {
-//     console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 export default app;
