@@ -10,24 +10,33 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'Email is required'],
-        unique: true,
         trim: true, 
         lowercase: true,
         validate: [validator.isEmail, 'Please enter a valid email address.']
     },
     password: {
         type: String,
-        required: [true, 'Password is required'],
         minlength: 8,
         select: false,
     },
     photo: {
         type: String,
     },
+    provider: {
+        type: String,
+        required: [true, 'Provider is required'],
+        default: 'local',
+    },
+    providerId: {
+        type: String,
+    },
     passwordChangedAt: {
         type: Date,
     },
 });
+
+// Index the email and provider fields to ensure unique combination
+userSchema.index({email: 1, provider: 1}, { unique: true });
 
 // Hash the password before saving the user
 userSchema.pre('save', async function(next) {
