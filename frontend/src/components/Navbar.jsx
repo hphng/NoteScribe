@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { AuthContext } from '../contexts/AuthContext';
 import { Menu, MenuButton, MenuItem, MenuItems, MenuSeparator } from '@headlessui/react'
 import defaultImage from '../assets/default_avatar.jpg'
+import axios from 'axios';
 
 const NavBar = () => {
   const [scroll, setScroll] = useState(false)
@@ -18,9 +19,12 @@ const NavBar = () => {
   }, []);
 
   if (loading) return;
-  const logout = () => {
+  const logout = async () => {
     console.log("LOGOUT");
-    localStorage.removeItem('token');
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {
+      withCredentials: true,
+    });
+    console.log(response.data);
     window.location.href = '/login';
   }
 

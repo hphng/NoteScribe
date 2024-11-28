@@ -50,9 +50,10 @@ const SignupPage = () => {
     }
     try {
       console.log('Form data submitted:', formData);
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, formData, {
+        withCredentials: true,
+      });
       console.log('Signup response:', response.data);
-      localStorage.setItem('token', response.data.token);
     } catch (error) {
       console.error('Error signing up:', error.message);
     }

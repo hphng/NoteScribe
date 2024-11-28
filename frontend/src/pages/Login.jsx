@@ -19,12 +19,12 @@ const LoginPage = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     console.log('Logging in...');
-    // Add login logic here
     try{
       console.log('Form data submitted:', formData);
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData, {
+        withCredentials: true,
+      });
       console.log('Login response:', response.data);
-      localStorage.setItem('token', response.data.token);
       window.location.href = '/';
     }catch(error){
       console.error('Error logging in:', error.message);

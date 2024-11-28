@@ -22,8 +22,8 @@ export const authMiddleware = async (req, res, next) => {
     console.log("In authMiddleware")
     //    1) Getting token and check if it's there
     let token;
-    if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-        token = req.headers.authorization.split(' ')[1];
+    if (req.cookies && req.cookies.authToken) {
+        token = req.cookies.authToken;
     }
     if(!token) {
         return res.status(401).json({ message: 'Please log in to get access.' });

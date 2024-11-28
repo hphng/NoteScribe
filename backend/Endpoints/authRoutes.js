@@ -33,6 +33,13 @@ authRoutes.post('/auth/signup', async (req, res) => {
         await newUser.save();
         const token = jwt.sign({ id: newUser._id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_TIME });
 
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'Lax',
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        });
+
         return res.status(200).json({token, newUser});
     } catch (error) {
         console.error('Error creating user:', error.message);
@@ -51,7 +58,7 @@ authRoutes.post('/auth/login', async (req, res) => {
     try {
         const user = await User.findOne({ email, provider: 'local' }).select('+password');
         if (!user) {
-            return res.status(401).json({ message: 'User data not found.' });
+            return res.status(404).json({ message: 'User data not found.' });
         }
         const checkPassword = await user.comparePassword(password, user.password);
         if (!checkPassword) {
@@ -59,11 +66,26 @@ authRoutes.post('/auth/login', async (req, res) => {
         }
 
         const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_TIME });
+        
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'Lax',
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        });
+
         return res.status(200).json({token});
     } catch (error) {
         console.error('Error fetching user data:', error.message);
         return res.status(500).json({ message: 'Internal server error.' });
     }
+})
+
+//LOGOUT
+authRoutes.get('/auth/logout', (req, res) => {
+    console.log("IN GET ROUTE OF /auth/logout")
+    res.clearCookie('authToken');
+    res.status(200).json({ message: 'Logout successful.' });
 })
 
 authRoutes.get('/auth/google', passport.authenticate('google', {
