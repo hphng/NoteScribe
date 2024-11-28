@@ -5,10 +5,12 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import path from 'path';
 import passport from './Utils/passportConfig.js';
+import cookieParser from 'cookie-parser';
 
 import audioRoutes from './Endpoints/audioRoutes.js';
 import userRoutes from './Endpoints/userRoutes.js';
 import authRoutes from './Endpoints/authRoutes.js';
+import cookiesRoutes from './Endpoints/cookiesRoutes.js';
 
 import { fileURLToPath } from 'url';
 
@@ -51,7 +53,13 @@ app.use(express.static(path.join(__dirname, '../frontend/dist')));
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'http://localhost:5173',
+        credentials: true
+    }
+));
+app.use(cookieParser());
 
 app.use((req, res, next) => {
     req.requestTime = new Date().toISOString();
@@ -66,6 +74,7 @@ app.use('/api', router);
 router.use('/', audioRoutes);
 router.use('/', userRoutes);
 router.use('/', authRoutes);
+router.use('/', cookiesRoutes);
 app.use('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
