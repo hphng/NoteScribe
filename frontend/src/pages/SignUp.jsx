@@ -164,6 +164,11 @@ const SignupPage = () => {
             </a>
           </p>
         </div>
+        <button 
+        onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`}
+      className="w-full py-2 mt-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200"> 
+        Sign Up with Google
+        </button>
       </form>
     </div>
   );

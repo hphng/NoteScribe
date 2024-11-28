@@ -99,8 +99,13 @@ authRoutes.get('/auth/google/callback',
         const { token, user } = req.user;
         console.log("Successfully authenticated with Google.")
         console.log(user);
-        res.status(200).json({token, user});
-        // res.redirect('/');
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'Lax',
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        });
+        res.redirect('/');
     }
 )
 
