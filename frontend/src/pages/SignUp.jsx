@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Field, Fieldset, Input, Label, Legend, Select } from '@headlessui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faLock, faImage, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle, faFacebook, faGithub } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 
 const SignupPage = () => {
@@ -50,9 +51,10 @@ const SignupPage = () => {
     }
     try {
       console.log('Form data submitted:', formData);
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/signup`, formData, {
+        withCredentials: true,
+      });
       console.log('Signup response:', response.data);
-      localStorage.setItem('token', response.data.token);
     } catch (error) {
       console.error('Error signing up:', error.message);
     }
@@ -155,13 +157,37 @@ const SignupPage = () => {
           </button>
         </Fieldset>
 
-        <div className="text-center mt-4">
+        <div className="text-center my-4">
           <p>
             Already have an account?{' '}
             <a href="/login" className="text-orange-500 hover:underline">
               Login
             </a>
           </p>
+        </div>
+
+        <div className='text-gray-400 border-t-2 border-t-gray-200'>
+          <p className='text-center my-2'>or you can sign in with</p>
+          <div className='w-full flex flex-row justify-center gap-4'>
+            <button onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`}>
+              <FontAwesomeIcon 
+                icon={faGoogle} 
+                className='text-2xl hover:text-google hover:scale-110 transition ease-in-out duration-200' 
+              />
+            </button>
+            <button onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/facebook`}>
+              <FontAwesomeIcon 
+                icon={faFacebook} 
+                className='text-2xl hover:text-facebook hover:scale-110 transition ease-in-out duration-200' 
+              />
+            </button>
+            <button onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`}>
+              <FontAwesomeIcon 
+                icon={faGithub} 
+                className='text-2xl hover:text-github hover:scale-110 transition ease-in-out duration-200' 
+              />
+            </button>
+          </div>
         </div>
       </form>
     </div>

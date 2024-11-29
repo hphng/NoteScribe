@@ -13,11 +13,8 @@ const DocumentList = () => {
     // Fetch audio data with only ID and document name
     const getAudioData = async () => {
       try {
-        const token = localStorage.getItem('token');
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/audio/u/metadata`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          withCredentials: true,
         });
         const data = response.data;
         setDocuments(data);

@@ -7,15 +7,12 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Load user data from localStorage or fetch from backend on mount
+    // fetch user data
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get( `${import.meta.env.VITE_API_URL}/api/user` , {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
+                const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/user`, {
+                    withCredentials: true,
                 });
                 const data = await response.data;
                 console.log("IN AUTHCONTEXT", data);
@@ -24,13 +21,9 @@ export const AuthProvider = ({ children }) => {
                 if (error.response && error.response.status === 401) {
                     console.warn('Unauthorized access - setting user to null');
                     setUser(null);
-                    localStorage.removeItem('token');
                 } else {
                     console.error('Error fetching user data:', error);
                 }
-                // setToken(null);
-                // localStorage.removeItem('token');
-                //   localStorage.removeItem('user');
             } finally {
                 setLoading(false);
             }

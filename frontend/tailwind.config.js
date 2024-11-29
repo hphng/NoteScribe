@@ -16,6 +16,11 @@ export default {
         mobile: { max: '768px' },
         tablet: { max: '1024px' },
         desktop: { min: '1025px' },
+      },
+      colors: {
+        facebook: '#3b5999',
+        google: '#db4437',
+        github: '#333',
       }
     },
   },
