@@ -110,4 +110,26 @@ authRoutes.get('/auth/google/callback',
     }
 )
 
+authRoutes.get('/auth/facebook', passport.authenticate('facebook', {
+    scope: ['public_profile', 'email']
+})) 
+
+authRoutes.get('/auth/facebook/callback', 
+    passport.authenticate('facebook', { session: false, failureRedirect: '/login' }),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        const { token, user } = req.user;
+        console.log("Successfully authenticated with Facebook.")
+        console.log(user);
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'Lax',
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        });
+        // res.redirect('/');
+        res.redirect('http://localhost:5173/');
+    }
+)
+
 export default authRoutes;
