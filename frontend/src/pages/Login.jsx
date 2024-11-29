@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faGoogle, faFacebook, faGithub } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
 
 const LoginPage = () => {
@@ -76,13 +77,37 @@ const LoginPage = () => {
           </button>
         </form>
 
-        <div className="text-center mt-4">
+        <div className="text-center my-4">
           <p>
             Don't have an account?{' '}
             <a href="/signup" className="text-orange-500 hover:underline">
               Sign Up
             </a>
           </p>
+        </div>
+
+        <div className='text-gray-400 border-t-2 border-t-gray-200'>
+          <p className='text-center my-2'>or you can sign in with</p>
+          <div className='w-full flex flex-row justify-center gap-4'>
+            <button onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`}>
+              <FontAwesomeIcon 
+                icon={faGoogle} 
+                className='text-2xl hover:text-google hover:scale-110 transition ease-in-out duration-200' 
+              />
+            </button>
+            <button onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`}>
+              <FontAwesomeIcon 
+                icon={faFacebook} 
+                className='text-2xl hover:text-facebook hover:scale-110 transition ease-in-out duration-200' 
+              />
+            </button>
+            <button onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`}>
+              <FontAwesomeIcon 
+                icon={faGithub} 
+                className='text-2xl hover:text-github hover:scale-110 transition ease-in-out duration-200' 
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>
