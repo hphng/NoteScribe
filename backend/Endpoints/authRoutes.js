@@ -132,4 +132,26 @@ authRoutes.get('/auth/facebook/callback',
     }
 )
 
+authRoutes.get('/auth/github', passport.authenticate('github', {
+   scope: ['user:email']
+}))
+
+authRoutes.get('/auth/github/callback', 
+    passport.authenticate('github', { session: false, failureRedirect: '/login' }),
+    function(req, res) {
+        // Successful authentication, redirect home.
+        const { token, user } = req.user;
+        console.log("Successfully authenticated with Github.")
+        console.log(user);
+        res.cookie('authToken', token, {
+            httpOnly: true,
+            secure: false,
+            sameSite: 'Lax',
+            maxAge: 1000 * 60 * 60 * 24 * 7
+        });
+        // res.redirect('/');
+        res.redirect('http://localhost:5173/');
+    }
+)
+
 export default authRoutes;

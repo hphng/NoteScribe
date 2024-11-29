@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
+import { Strategy as GithubStrategy } from 'passport-github2';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import User from '../Database Schema/User.js';
@@ -88,5 +89,42 @@ passport.use(
         }
     )
 )
+
+//GITHUB STRATEGY
+passport.use( new GithubStrategy(
+    {
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: '/api/auth/github/callback',
+    },
+    async (accessToken, refreshToken, profile, done) => {
+        console.log('Github Profile:', profile);
+        console.log('id', profile.provider)
+        try {
+
+            let user = await User.findOne({ email: profile._json.email , provider: profile.provider });
+            if (user) {
+                const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_TIME });
+                done(null, { user, token });
+                return;
+            }
+
+            user = new User({
+                name: profile.displayName,
+                email: profile._json.email,
+                photo: profile._json.avatar_url,
+                provider: profile.provider,
+                providerId: profile.id,
+            });
+            await user.save();
+
+            const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: JWT_EXPIRES_TIME });
+            done(null, { user, token });
+        } catch (error) {
+            console.error('Error when saving user to db in github strategy:', error.message);
+            done(error, null);
+        }
+    }
+));
 
 export default passport;
