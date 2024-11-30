@@ -105,8 +105,7 @@ authRoutes.get('/auth/google/callback',
             sameSite: 'Lax',
             maxAge: 1000 * 60 * 60 * 24 * 7
         });
-        // res.redirect('/');
-        res.redirect('http://localhost:5173');
+        res.redirect('/');
     }
 )
 
@@ -127,8 +126,7 @@ authRoutes.get('/auth/facebook/callback',
             sameSite: 'Lax',
             maxAge: 1000 * 60 * 60 * 24 * 7
         });
-        // res.redirect('/');
-        res.redirect('http://localhost:5173/');
+        res.redirect('/');
     }
 )
 
@@ -149,8 +147,7 @@ authRoutes.get('/auth/github/callback',
             sameSite: 'Lax',
             maxAge: 1000 * 60 * 60 * 24 * 7
         });
-        // res.redirect('/');
-        res.redirect('http://localhost:5173/');
+        res.redirect('/');
     }
 )
 
