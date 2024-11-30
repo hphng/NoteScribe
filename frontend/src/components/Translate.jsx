@@ -94,40 +94,43 @@ const Translate = ({ text, onTranslationComplete, onTranslateLanguage }) => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full pt-8">
-      <div className='w-full'>
-        <div className='language-container w-full flex flex-row justify-evenly gap-44 '>
+      <div className='w-full flex flex-row mobile:flex-col'>
+        <div>
           <LanguageSelector type={"Source"} defaultLanguage={"eng_Latn"} onChange={x => setSourceLanguage(x.target.value)} />
-          <LanguageSelector type={"Target"} defaultLanguage={"fra_Latn"} onChange={x => setTargetLanguage(x.target.value)} />
-        </div>
-
-        <div className='textbox-container flex flex-row justify-evenly gap-44'>
           <textarea
             value={text} onChange={e => setInput(e.target.value)}
-            className="mt-4 p-4 w-96 overflow-y-scroll bg-orange-50 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
-                      scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200"></textarea>
+            className="mt-4 p-4 w-96 h-[300px] mobile:h-[200px] overflow-y-scroll bg-orange-50 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
+                      scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200"
+          ></textarea>
+        </div>
+
+        <div className='flex flex-col justify-center mobile:my-4 '>
+          <button disabled={disabled} onClick={translate}
+            className='mx-20 fa-4x text-orange-500 hover:text-orange-600 hover:scale-125 duration-200 flex items-center 
+                    mobile:mx-0 mobile:justify-center mobile:rotate-90'
+          >
+            {ready ? (
+              <FontAwesomeIcon icon={faArrowRight} />
+            ) : (
+              <FontAwesomeIcon icon={faCircleNotch} className="animate-spin" />
+            )}
+          </button>
+          <div className='text-center mobile:hidden'>
+            {progressItems.map(data => (
+              <div key={data.file}>
+                <Progress text={data.file} percentage={data.progress} />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className=' mobile:mb-28'>
+          <LanguageSelector type={"Target"} defaultLanguage={"fra_Latn"} onChange={x => setTargetLanguage(x.target.value)} />
           <textarea
             value={output} readOnly
-            className="mt-4 p-4 w-96 h-[300px] overflow-y-scroll bg-orange-100 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
-                      scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200"></textarea>
+            className="mt-4 p-4 w-96 h-[300px] mobile:h-[200px] overflow-y-scroll bg-orange-100 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg 
+                      scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-orange-200"
+          ></textarea>
         </div>
-      </div>
-
-      <button disabled={disabled} onClick={translate}
-        className=' absolute fa-4x text-orange-500 hover:text-orange-600 hover:scale-125 duration-200 flex items-center'
-      >
-        {ready ? (
-          <FontAwesomeIcon icon={faArrowRight} />
-        ) : (
-          <FontAwesomeIcon icon={faCircleNotch} className="animate-spin" />
-        )}
-      </button>
-
-      <div className='absolute top-2/3'>
-        {progressItems.map(data => (
-          <div key={data.file}>
-            <Progress text={data.file} percentage={data.progress} />
-          </div>
-        ))}
       </div>
     </div>
   )

@@ -73,7 +73,7 @@ const SignupPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <form onSubmit={handleSignupSubmit} className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg shadow-orange-500 border-2 border-black">
+      <form onSubmit={handleSignupSubmit} className="w-full max-w-md mobile:w-[80%] p-8 bg-white rounded-lg shadow-lg shadow-orange-500 border-2 border-black">
         <Fieldset className="space-y-4">
           <Legend className="text-2xl font-bold text-center text-orange-500 mb-4">Sign Up</Legend>
 

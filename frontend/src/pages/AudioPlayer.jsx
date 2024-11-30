@@ -148,7 +148,7 @@ const AudioPlayer = () => {
   }
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center">
+    <div className={`relative min-h-screen flex flex-col items-center justify-center ${transcribedText?"pt-20":""}`}>
       {!transcribedText && (<h1 className="text-6xl font-bold pb-4">Your <span className='bold text-orange-500'>Scribe</span></h1>)}
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} preload="auto">
         <source src={audioURL} type="audio/mp3" />
@@ -222,7 +222,7 @@ const AudioPlayer = () => {
       {/* Button to trigger modal */}
       <button
         onClick={openModal}
-        className={`absolute bottom-10 left-[48%] px-4 py-2 text-white rounded-lg ${!transcribedText
+        className={`absolute bottom-10 left-[50%] -translate-x-1/2  px-4 py-2 text-white rounded-lg ${!transcribedText
           ? "bg-gray-400 cursor-not-allowed"
           : "bg-green-500 hover:bg-green-600"
           }`}

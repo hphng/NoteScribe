@@ -176,14 +176,16 @@ const DocumentDetails = () => {
       {/* transcription and translation */}
       <h2 className="text-3xl font-semibold m-4 text-orange-600">Transcription</h2>
       <textarea
-        className="p-4 w-full min-h-[300px] bg-gray-100 text-gray-700 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg"
+        className="p-4 w-full min-h-[300px] bg-gray-100 text-gray-700 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg
+                  mobile:min-h-[200px] mobile:w-[90%]"
         value={transcription}
         onChange={handleTranscriptionChange}
       />
 
       <h2 className="text-3xl font-semibold m-4 text-orange-600">Translation ({document.language})</h2>
       <textarea
-        className="p-4 w-full min-h-[300px] bg-gray-100 text-gray-700 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg"
+        className="p-4 w-full min-h-[300px] bg-gray-100 text-gray-700 shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg
+                  mobile:min-h-[200px] mobile:w-[90%]"
         value={translation}
         onChange={handleTranslationChange}
       />
