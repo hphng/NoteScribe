@@ -101,7 +101,7 @@ authRoutes.get('/auth/google/callback',
         console.log(user);
         res.cookie('authToken', token, {
             httpOnly: true,
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'Lax',
             maxAge: 1000 * 60 * 60 * 24 * 7
         });
@@ -122,7 +122,7 @@ authRoutes.get('/auth/facebook/callback',
         console.log(user);
         res.cookie('authToken', token, {
             httpOnly: true,
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'Lax',
             maxAge: 1000 * 60 * 60 * 24 * 7
         });
@@ -143,7 +143,7 @@ authRoutes.get('/auth/github/callback',
         console.log(user);
         res.cookie('authToken', token, {
             httpOnly: true,
-            secure: false,
+            secure: process.env.NODE_ENV === 'production',
             sameSite: 'Lax',
             maxAge: 1000 * 60 * 60 * 24 * 7
         });
