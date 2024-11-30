@@ -39,7 +39,7 @@ const DocumentList = () => {
 
   return (
     <div className="min-h-screen py-10 flex items-center justify-center">
-      <div className="w-[60%] mx-auto bg-white shadow-md rounded-lg p-6">
+      <div className="w-[60%] mobile:w-[90%] mx-auto bg-white shadow-md rounded-lg p-6">
         <h1 className="text-3xl font-bold text-center mb-8">Document List</h1>
         <ul className="divide-y divide-gray-200">
           {documents.length > 0 ? (

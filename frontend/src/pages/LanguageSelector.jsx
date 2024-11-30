@@ -3,7 +3,7 @@ import { LANGUAGES } from '../utils/data.js';
 
 export default function LanguageSelector({ type, onChange, defaultLanguage }) {
   return (
-    <div className='shadow-md shadow-orange-500 border-2  border-black text-left rounded-lg w-full'>
+    <div className='shadow-md shadow-orange-500 border-2 border-black text-left rounded-lg w-full'>
       {/* <label>{type}: </label> */}
       <select
         onChange={onChange}

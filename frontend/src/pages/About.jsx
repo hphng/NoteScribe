@@ -30,7 +30,7 @@ const About = () => {
         </p>
 
         <h2 className="text-4xl font-bold text-gray-700 py-4">Key Features</h2>
-        <ul className="list-disc text-lg text-gray-500 mb-6 text-left">
+        <ul className="list-inside list-disc text-lg text-gray-500 mb-6 text-left">
           <li className="my-2">
             <span className="font-bold text-gray-700">Audio Transcription:</span> Automatically transcribe recorded audio into text with high accuracy, turning voice recordings into readable documents.
           </li>
