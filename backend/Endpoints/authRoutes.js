@@ -85,6 +85,7 @@ authRoutes.post('/auth/login', async (req, res) => {
 authRoutes.get('/auth/logout', (req, res) => {
     console.log("IN GET ROUTE OF /auth/logout")
     res.clearCookie('authToken');
+    console.log(process.env.NODE_ENV);
     res.status(200).json({ message: 'Logout successful.' });
 })
 
