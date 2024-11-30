@@ -23,6 +23,7 @@ dotenv.config({ path: '../.env' }); // Load environment variables from a .env fi
 const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoURI = process.env.MONGO_URI;
+const BASE_URL = process.env.BASE_URL;
 
 if (!mongoURI) {
     console.error('MONGO_URI is not defined in the environment variables');
@@ -55,7 +56,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors(
     {
-        origin: 'http://localhost:5173',
+        origin: BASE_URL,
         credentials: true
     }
 ));
