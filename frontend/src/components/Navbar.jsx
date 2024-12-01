@@ -22,7 +22,7 @@ const NavBar = () => {
   const logout = async () => {
     console.log("LOGOUT");
     const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {}, {
-      credentials: 'same-origin',
+      withCredentials: true,
     });
     console.log(response.data);
     window.location.href = '/login';
