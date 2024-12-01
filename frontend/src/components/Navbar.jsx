@@ -44,8 +44,8 @@ const NavBar = () => {
           <li><Link to="/" className="hover:text-orange-500">Home</Link></li>
           <li><Link to="/about" className="hover:text-orange-500">About</Link></li>
           {
-            user ? 
-            <li><Link to="/a" className="hover:text-orange-500">My Audio</Link></li> : null
+            user ?
+              <li><Link to="/a" className="hover:text-orange-500">My Audio</Link></li> : null
           }
           {!loading && (
             user ? (
@@ -62,14 +62,19 @@ const NavBar = () => {
                               border-2 border-black shadow-md shadow-orange-500
                               transition duration-200 ease-out data-[closed]:scale-95 data-[closed]:opacity-0">
                     <MenuItem disabled>
-                      <a className="block px-4 py-2 text-sm cursor-default" href="/">
+                      {/* <a className="block px-4 py-2 text-sm cursor-default" href="/">
                         {user.name.substring(0, 16)}
                         {user.name.length > 16 ? '...' : ''}
-                      </a>
+                      </a> */}
+                      <Link to="/" className="block px-4 py-2 text-sm cursor-default">
+                        {user.name.substring(0, 16)}
+                        {user.name.length > 16 ? '...' : ''}
+                      </Link>
                     </MenuItem>
                     <MenuSeparator className="h-[2px] bg-black" />
                     <MenuItem>
-                      <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-200/70" href="/profile"> Profile </a>
+                      <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-200/70">Profile</Link>
+                      {/* <a className="block px-4 py-2 text-sm text-gray-700 hover:bg-orange-200/70" href="/profile"> Profile </a> */}
                     </MenuItem>
                     <MenuItem>
                       <button onClick={logout} className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-orange-200/70">Logout</button>
