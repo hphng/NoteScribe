@@ -21,9 +21,8 @@ const NavBar = () => {
   if (loading) return;
   const logout = async () => {
     console.log("LOGOUT");
-    axios.defaults.withCredentials = true;
     const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/logout`, {}, {
-      withCredentials: true,
+      credentials: 'same-origin',
     });
     console.log(response.data);
     window.location.href = '/login';
