@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faPause, faVolumeHigh, faVolumeXmark, faDownload } from '@fortawesome/free-solid-svg-icons'
 import getBlobDuration from "get-blob-duration";
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 
 const DocumentDetails = () => {
   const audioId = useParams().id;
@@ -113,7 +114,10 @@ const DocumentDetails = () => {
   const saveChanges = async () => {
     console.log('Saving changes...');
     if(document.transcription === transcription && document.translation === translation) {
-      alert('No changes detected.');
+      toast.info('No changes detected.', {
+        position: 'top-right',
+        autoClose: 2000,
+      })
       return;
     }
     try {
@@ -124,9 +128,16 @@ const DocumentDetails = () => {
       console.log('Save changes:', response.data);
       document.transcription = transcription;
       document.translation = translation;
-      alert('Changes saved successfully.');
+      toast.success('Changes saved successfully!', {
+        position: 'top-right',
+        autoClose: 2000,
+      })
     } catch (error) {
       console.error('Error saving changes:', error.message);
+      toast.error('Error saving changes. Please try again.', {
+        position: 'top-right',
+        autoClose: 2000,
+      })
     }
   }
 
@@ -204,6 +215,7 @@ const DocumentDetails = () => {
           Back to List
         </button>
       </div>
+      <ToastContainer pauseOnFocusLoss={false}/>
     </div>
   );
 };

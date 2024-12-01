@@ -76,6 +76,11 @@ router.use('/', audioRoutes);
 router.use('/', userRoutes);
 router.use('/', authRoutes);
 router.use('/', cookiesRoutes);
+
+app.use('/api', (req, res) => {
+    res.status(404).send({ message: 'Not found' });
+});
+
 app.use('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });

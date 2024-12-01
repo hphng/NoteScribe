@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause, faVolumeHigh, faVolumeXmark, faDownload, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useLocation, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
 import Transcribe from '../components/Transcribe';
 import Translate from "../components/Translate";
 import {
@@ -106,7 +107,10 @@ const AudioPlayer = () => {
   }
 
   const needLogin = () => {
-    alert('Please login to save your document');
+    toast.error('Please login to save your document!', {
+      position: "top-right",
+      className: 'bg-red-500 text-white',
+    });
     // navigate('/login');
   }
 
@@ -137,10 +141,18 @@ const AudioPlayer = () => {
       })
         .then((res) => {
           console.log(res.data);
+          toast.success('Document saved successfully!', {
+            position: "top-right",
+            className: 'bg-green-500 text-white',
+          });
           closeModal();
         })
         .catch((err) => {
           console.log(err);
+          toast.error('Error saving document!', {
+            position: "top-right",
+            className: 'bg-red-500 text-white',
+          });
         });
     } catch (err) {
       console.log(err);
@@ -148,7 +160,7 @@ const AudioPlayer = () => {
   }
 
   return (
-    <div className={`relative min-h-screen flex flex-col items-center justify-center ${transcribedText?"pt-20":""}`}>
+    <div className={`relative min-h-screen flex flex-col items-center justify-center ${transcribedText ? "pt-20" : ""}`}>
       {!transcribedText && (<h1 className="text-6xl font-bold pb-4">Your <span className='bold text-orange-500'>Scribe</span></h1>)}
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} preload="auto">
         <source src={audioURL} type="audio/mp3" />
@@ -190,7 +202,18 @@ const AudioPlayer = () => {
           <Tab className="px-4 py-2 text-white rounded-tl-full rounded-bl-full bg-gray-300 data-[selected]:bg-orange-500">
             Transcribe
           </Tab>
-          <Tab className="px-4 py-2 text-white rounded-tr-full rounded-br-full bg-gray-300 data-[selected]:bg-orange-500">
+          <Tab
+            className="px-4 py-2 text-white rounded-tr-full rounded-br-full bg-gray-300 data-[selected]:bg-orange-500"
+            onClick={(event) => {
+              if (!transcribedText) {
+                event.preventDefault();
+                toast.error("Please transcribe text first!", {
+                  position: "top-right",
+                  className: 'bg-red-500 text-white',
+                });
+              }
+            }}
+          >
             Translate
           </Tab>
         </TabList>
@@ -230,6 +253,7 @@ const AudioPlayer = () => {
       >
         Save
       </button>
+      <ToastContainer pauseOnFocusLoss={false} />
       <Dialog open={isModalOpen} onClose={closeModal} className="relative z-50">
         <DialogBackdrop className="fixed inset-0 bg-black/30" />
         <div className="fixed inset-0 w-screen p-4">
@@ -258,7 +282,7 @@ const AudioPlayer = () => {
               <p>{translatedText ? translatedText : "no translation available"}</p>
               <div className="flex gap-4 pt-6">
                 <button onClick={closeModal} className="px-4 py-2 text-white bg-orange-500 hover:bg-orange-600 rounded-lg">Cancel</button>
-                <button onClick={user? saveDocument : needLogin} className="px-4 py-2 text-white bg-orange-500 hover:bg-orange-600 rounded-lg">Save</button>
+                <button onClick={user ? saveDocument : needLogin} className="px-4 py-2 text-white bg-orange-500 hover:bg-orange-600 rounded-lg">Save</button>
               </div>
             </DialogPanel>
           </div>
