@@ -3,10 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { faGoogle, faFacebook, faGithub } from '@fortawesome/free-brands-svg-icons';
 import axios from 'axios';
+import { set } from 'mongoose';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,6 +22,7 @@ const LoginPage = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     console.log('Logging in...');
+    setError(null);
     try{
       console.log('Form data submitted:', formData);
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, formData, {
@@ -29,6 +32,11 @@ const LoginPage = () => {
       window.location.href = '/';
     }catch(error){
       console.error('Error logging in:', error.message);
+      if(error.status === 401){
+        setError('Invalid email or password');
+      } else {
+        setError('An error occurred. Please try again later.');
+      }
     }
   };
 
@@ -67,6 +75,10 @@ const LoginPage = () => {
             >
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </button>
+          </div>
+
+          <div className='text-red-500 text-center text-sm pt-'>
+            {error && <p>{error}</p>}
           </div>
 
           <button

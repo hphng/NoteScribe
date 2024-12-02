@@ -181,7 +181,7 @@ const SignupPage = () => {
                 className='text-2xl hover:text-facebook hover:scale-110 transition ease-in-out duration-200' 
               />
             </button>
-            <button onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/google`}>
+            <button onClick={() => window.location.href = `${import.meta.env.VITE_API_URL}/api/auth/github`}>
               <FontAwesomeIcon 
                 icon={faGithub} 
                 className='text-2xl hover:text-github hover:scale-110 transition ease-in-out duration-200' 
