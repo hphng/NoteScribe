@@ -16,15 +16,15 @@ const Profile = () => {
     return (
         <main className="min-h-screen flex flex-col items-center justify-center mt-16">
             <Fieldset className="relative w-full max-w-md p-6 bg-white border-2 border-black rounded-lg shadow-md shadow-orange-500 ">
-                <img
+                {/* <img
                     src={user?.photo || defaultImage}
                     alt="Profile"
                     className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 w-32 
                               aspect-square rounded-full mx-auto mb-4 border-2 border-black shadow-md shadow-orange-500"
-                />
-                {/* <div className='blank-space-for-profile-image w-full h-16'></div>
+                /> */}
+                <div className='blank-space-for-profile-image w-full h-16'></div>
                 <Legend className="text-lg font-bold text-orange-500 text-center mb-8">User Information</Legend>
-                <Field className="flex flex-col items-center mb-3">
+                {/* <Field className="flex flex-col items-center mb-3">
                     <Label className="block">First Name</Label>
                     <Input
                         className="mt-1 block ml-3 border border-gray-300 rounded-md px-3 py-2 w-full 
