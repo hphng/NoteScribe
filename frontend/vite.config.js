@@ -9,7 +9,7 @@ const apiUrl = process.env.VITE_API_URL;
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(''), '')
   return {
-    base: './',
+    base: '/',
     plugins: [react()],
     server: {
       proxy: {
