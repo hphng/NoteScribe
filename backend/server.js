@@ -30,20 +30,21 @@ if (!mongoURI) {
     process.exit(1);
 }
 
-const connectToMongoDB = async () => {
-    return new Promise((resolve, reject) => {
-        mongoose.connect(mongoURI, {
-            serverSelectionTimeoutMS: 5000 // 5 seconds timeout
-        })
-            .then(() => {
-                console.log('MongoDB connected');
-                resolve();
-            })
-            .catch((err) => {
-                console.error('Error connecting to MongoDB:', err.message);
-                reject(err);
+const connectToMongoDB = async (retries = 5) => {
+    while (retries) {
+        try {
+            await mongoose.connect(mongoURI, {
+                serverSelectionTimeoutMS: 5000
             });
-    });
+            console.log('MongoDB connected');
+            break;
+        } catch (err) {
+            console.error(`MongoDB connection failed: ${err.message}. Retrying (${retries} attempts left)...`);
+            retries -= 1;
+            if (retries === 0) process.exit(1);
+            await new Promise(res => setTimeout(res, 5000)); // Retry after 5 seconds
+        }
+    }
 };
 
 connectToMongoDB();
