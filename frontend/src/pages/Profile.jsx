@@ -15,7 +15,7 @@ const Profile = () => {
     }
     return (
         <main className="min-h-screen flex flex-col items-center justify-center mt-16">
-            <Fieldset className="relative w-full max-w-md p-6 bg-white border-2 border-black rounded-lg shadow-md shadow-orange-500 ">
+            <Fieldset className="relative w-full max-w-md mobile:w-[90%] p-6 bg-white border-2 border-black rounded-lg shadow-md shadow-orange-500 ">
                 <img
                     src={user?.photo || defaultImage}
                     alt="Profile"

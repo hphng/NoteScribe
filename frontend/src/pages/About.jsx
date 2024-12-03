@@ -6,8 +6,8 @@ const About = () => {
       <h1 className="text-6xl font-bold text-orange-500 pb-6">About Me</h1>
       <div className="w-full md:w-2/3 lg:w-1/2 text-center">
         <p className="text-xl text-gray-600 mb-4">
-          Hi, I'm <span className="text-orange-500">Huy Phung</span> – the sole developer behind <span className="text-orange-500">NoteScribe</span>
-          , a personal project born out of my passion for coding and simplifying everyday tasks through technology.
+          Hi, I'm <span className="text-orange-500">Huy Phung</span> – welcome to my senior project, a <span className="text-orange-500">NoteScribe</span> that 
+          focused on helping people with hearing impairments by providing an easy way to transcribe and translate audio recordings
         </p>
         <p className="text-xl text-gray-600 mb-4">
           NoteScribe is an intuitive audio recording app that helps users quickly capture and manage their voice notes,
@@ -16,21 +16,21 @@ const About = () => {
         </p>
 
         <h2 className="text-4xl font-bold text-gray-700 py-4">My Journey</h2>
-        <p className="text-lg text-gray-500 mb-6">
+        <p className="text-xl text-gray-600 mb-6">
           With a background in web development and experience building applications using modern technologies,
           I’ve always been fascinated by how code can make life easier. My goal with this project is to create a simple yet
           effective tool for capturing and organizing voice notes, using my skills in both front-end and back-end development.
         </p>
 
         <h2 className="text-4xl font-bold text-gray-700 py-4">Why I Built NoteScribe</h2>
-        <p className="text-lg text-gray-500 mb-6">
+        <p className="text-xl text-gray-600 mb-6">
           As someone who enjoys developing software that solves real-world problems, I saw a need for an app that could make
           the audio recording process smoother and more accessible. From personal notes to meeting recordings, I wanted to build
           something that anyone could use, no matter their level of technical expertise.
         </p>
 
         <h2 className="text-4xl font-bold text-gray-700 py-4">Key Features</h2>
-        <ul className="list-inside list-disc text-lg text-gray-500 mb-6 text-left">
+        <ul className="list-inside list-disc text-xl text-gray-600 mb-6 text-left">
           <li className="my-2">
             <span className="font-bold text-gray-700">Audio Transcription:</span> Automatically transcribe recorded audio into text with high accuracy, turning voice recordings into readable documents.
           </li>
@@ -50,14 +50,14 @@ const About = () => {
 
 
         <h2 className="text-4xl font-bold text-gray-700 py-4">Looking Forward</h2>
-        <p className="text-lg text-gray-500 mb-6">
+        <p className="text-xl text-gray-600 mb-6">
           As I continue to develop and refine NoteScribe, I am excited to explore new features, such as integrating automatic
           transcription and AI-based note organization. This project is an ongoing journey, and I look forward to enhancing its
           capabilities.
         </p>
 
         <h2 className="text-4xl font-bold text-gray-700 py-4">Get in Touch</h2>
-        <p className="text-lg text-gray-500 mb-6">
+        <p className="text-xl text-gray-600 mb-6">
           If you have any feedback or suggestions, feel free to reach out! You can contact me
           at <a href="mailto:[YourEmail@example.com]" className="text-orange-500">huyphung3103@gmail.com</a>.
         </p>
